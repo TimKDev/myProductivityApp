@@ -1,0 +1,52 @@
+mat-card {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse; // Dies muss gemacht werden, damit man eine durchgezogene
+  // Linie erhält, wenn man den tr bzw. den th Tags eine border-bottom gibt!
+  
+  tr {
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.4);
+    cursor: pointer;
+    &:first-child {
+      cursor: unset;
+      &:hover {
+        background-color: unset;
+      }
+    }
+    &:last-child { // Unter dem letzten tr soll keine Linie mehr angezeigt werden.
+        border-bottom: 0;
+    }
+    &:hover {
+      background-color: rgba($color: #000000, $alpha: 0.04);
+    }
+    th {
+      color: rgba($color: #000000, $alpha: 0.4);
+      font-size: 14px;
+      font-weight: 500;
+      text-align: start;
+      border-bottom: 1px solid rgba(0,0,0,0.4);
+      &:first-child {
+        padding-left: 16px;
+      }
+    }
+    td {
+      height: 48px;
+      &:first-child {
+        padding-left: 16px;
+      }
+    }
+  }
+  
+}
+
+
+.add-button {
+  position: absolute;
+  right: 56px;
+  bottom: 56px;
+}

@@ -33,6 +33,7 @@ import { BoardComponent } from './board/board.component';
 import { LoginComponent } from './login/login.component';
 import { DialogAddAccountComponent } from './dialog-add-account/dialog-add-account.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { DialogAddBoardComponent } from './dialog-add-board/dialog-add-board.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     BoardComponent,
     LoginComponent,
     DialogAddAccountComponent,
-    TodoListComponent
+    TodoListComponent,
+    DialogAddBoardComponent
   ],
   imports: [
     BrowserModule,

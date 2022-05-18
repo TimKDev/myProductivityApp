@@ -12,7 +12,6 @@ import { Board } from 'src/models/board.class';
 })
 export class BoardComponent implements OnInit {
 
-  boards = [new Board()];
 
   activeBoard!: Board;
 
@@ -20,7 +19,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.activeBoard = this.boards[params['boardId']];
+      // this.activeBoard = this.boards[params['boardId']];
     });
   }
 

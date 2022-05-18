@@ -1,4 +1,25 @@
-<p>kanban-boards works!</p>
-<!-- Wichtig: Wenn Variablen in der URL verwendet werden, muss die [] URL Notation verwendet werden
-und routerLink startet immer von der aktuellen URL und nicht von der root URL! -->
-<a [routerLink]="[0]">Board 1</a>
+<mat-card>
+  <table class="user-table">
+    <tr>
+      <th>Name</th>
+      <th>Active Tasks</th>
+      <th>Progress</th>
+    </tr>
+    <tr *ngFor="let board of allBoards, let i = index" [routerLink]="[i]">
+      <td>{{ board.name }}</td>
+      <td>{{ "Test" }}</td>
+      <td>{{ "Test2" }}</td>
+    </tr>
+  </table>
+
+</mat-card>
+
+
+<!-- Mit der Angular Material Tooltip Komponente können Beschreibungen mit Erklärungen beim 
+Hovern über bestimmten Objekten angezeigt werden:  -->
+<button mat-fab color="primary"
+  (click)="openDialog()"
+  class="add-button"
+  matTooltip="Add Board">
+  <mat-icon>add</mat-icon>
+</button>
