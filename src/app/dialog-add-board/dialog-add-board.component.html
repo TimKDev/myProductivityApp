@@ -1,1 +1,24 @@
-<p>dialog-add-board works!</p>
+<div class="dialog-container">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+  <h1 mat-dialog-title>Add new Board</h1>
+
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" class="mr-16">
+      <mat-label>Name Board</mat-label>
+      <input matInput #nameBoard>
+    </mat-form-field>  
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button color="primary"
+      (click)="dialogRef.close()">
+      Cancle
+    </button>
+    <button mat-raised-button color="primary"
+      (click)="addBoard(nameBoard.value)">
+      Create
+    </button>
+  </div>
+
+</div>

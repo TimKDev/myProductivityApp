@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Board } from 'src/models/board.class';
+import { FirebaseAuthService } from '../firebase-auth.service';
 
 @Component({
   selector: 'app-dialog-add-board',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogAddBoardComponent implements OnInit {
 
-  constructor() { }
+  loading = false;
+
+  constructor(
+    private auth: FirebaseAuthService,
+    private firestore: AngularFirestore,
+    public dialogRef: MatDialogRef<DialogAddBoardComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  addBoard(nameBoard: string) {
+    // Teste ob der Name nicht von einem anderen Board besetzt ist, sonst verweigere die Erstellung und gib eine Warnung aus!
+    this.loading = true;
+    let newBoard = new Board({
+      name: nameBoard, 
+      categories: ['Work', 'Freetime'], 
+      columns: ['To do', 'Do today', 'Doing', 'Done']
+    })
+    this.firestore
+    .collection('user')
+    .doc(`${this.auth.userUid}`)
+    .collection('boards')
+    .add(newBoard.toJSON())
+    .then((result: any) => {
+      this.loading = false;
+      this.dialogRef.close();
+    })
+    
   }
 
 }
