@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from 'src/models/board.class';
+import { MyTask } from 'src/models/task.class';
+import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
+import { FirebaseAuthService } from '../firebase-auth.service';
 
 @Component({
   selector: 'app-board',
@@ -12,16 +17,55 @@ import { Board } from 'src/models/board.class';
 })
 export class BoardComponent implements OnInit {
 
+  activeBoard: Board = new Board({
+    name: '',
+    columns: [],
+    categories: [],
+    author: ''
+  });
+  allTasksBoard: MyTask[] = [];
+  activeBoardId!: string;
 
-  activeBoard!: Board;
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private firestore: AngularFirestore,
+    public auth: FirebaseAuthService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      // this.activeBoard = this.boards[params['boardId']];
+      this.activeBoardId = params['boardId'];
+
+      this.firestore
+      .collection('boards')
+      .doc(params['boardId'])
+      .valueChanges()
+      .subscribe((changes: any) => {
+        this.activeBoard = changes;
+      });
+
+      this.firestore
+      .collection('tasks')
+      .valueChanges()
+      .subscribe((changes: any) => {
+        this.allTasksBoard = changes.filter((task: any) => {
+          return task.boardName == params['boardId'];
+        });        
+      });
     });
   }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogAddTaskComponent);
+    dialogRef.componentInstance.categories = this.activeBoard.categories;
+    dialogRef.componentInstance.boardName = this.activeBoardId;
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+
 
 
 }

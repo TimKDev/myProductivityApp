@@ -25,7 +25,9 @@ export class KanbanBoardsComponent implements OnInit {
     .valueChanges({idField: 'idBoard'})
     .subscribe((changes: any) => {
       console.log('Received changes from DB:', changes);
-      this.allBoards = changes;
+      this.allBoards = changes.filter((board: any) => {
+        return board.author == this.auth.userUid;
+      });
       
     });
   }

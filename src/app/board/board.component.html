@@ -1,10 +1,19 @@
-<!-- <div class="board-container">
-  <mat-card *ngFor="let cate of activeBoard.categories, let i = index"
+<h1>{{ activeBoard.name }}</h1>
+
+<div class="board-container">
+  <mat-card *ngFor="let col of activeBoard.columns, let i = index"
     class="category-div">
-    <mat-card-title>{{ cate }}</mat-card-title>
-    <mat-card *ngFor="let task of activeBoard.tasks[i]">
-      <mat-card-title>{{ task.title }}</mat-card-title>
-      <mat-card-content>{{ task.content }}</mat-card-content>
+    <mat-card-title>{{ col }}</mat-card-title>
+    <mat-card *ngFor="let task of allTasksBoard">
+      <mat-card-title>{{ task.name }}</mat-card-title>
+      <mat-card-content>{{ task.description }}</mat-card-content>
     </mat-card>
   </mat-card>
-</div> -->
+</div>
+
+<button mat-fab color="primary"
+  (click)="openDialog()"
+  class="add-button"
+  matTooltip="Add Task">
+  <mat-icon>add</mat-icon>
+</button>

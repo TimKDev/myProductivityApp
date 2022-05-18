@@ -5,7 +5,7 @@
       <th>Active Tasks</th>
       <th>Progress</th>
     </tr>
-    <tr *ngFor="let board of allBoards, let i = index" [routerLink]="[i]">
+    <tr *ngFor="let board of allBoards, let i = index" [routerLink]="[board.idBoard]">
       <td>{{ board.name }}</td>
       <td>{{ "Test" }}</td>
       <td>{{ "Test2" }}</td>

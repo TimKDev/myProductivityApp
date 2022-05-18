@@ -34,6 +34,7 @@ import { LoginComponent } from './login/login.component';
 import { DialogAddAccountComponent } from './dialog-add-account/dialog-add-account.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { DialogAddBoardComponent } from './dialog-add-board/dialog-add-board.component';
+import { DialogAddTaskComponent } from './dialog-add-task/dialog-add-task.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { DialogAddBoardComponent } from './dialog-add-board/dialog-add-board.com
     LoginComponent,
     DialogAddAccountComponent,
     TodoListComponent,
-    DialogAddBoardComponent
+    DialogAddBoardComponent,
+    DialogAddTaskComponent
   ],
   imports: [
     BrowserModule,
