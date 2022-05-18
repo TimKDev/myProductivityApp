@@ -105,6 +105,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "myProductivityApp:build:production",
+            "firebaseProject": "productivityapp-dde8a",
+            "firebaseHostingSite": "productivityapp-dde8a"
+          }
         }
       }
     }

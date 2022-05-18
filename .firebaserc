@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "productivityapp-dde8a": {
+      "hosting": {
+        "myProductivityApp": [
+          "productivityapp-dde8a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "productivityapp-dde8a"
+  }
+}
