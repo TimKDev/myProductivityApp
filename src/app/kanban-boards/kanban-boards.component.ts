@@ -21,8 +21,6 @@ export class KanbanBoardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.firestore
-    .collection('user')
-    .doc(`${this.auth.userUid}`)
     .collection('boards')
     .valueChanges({idField: 'idBoard'})
     .subscribe((changes: any) => {

@@ -28,14 +28,13 @@ export class DialogAddBoardComponent implements OnInit {
     let newBoard = new Board({
       name: nameBoard, 
       categories: ['Work', 'Freetime'], 
-      columns: ['To do', 'Do today', 'Doing', 'Done']
+      columns: ['To do', 'Do today', 'Doing', 'Done'], 
+      author: `${this.auth.userUid}`
     })
     this.firestore
-    .collection('user')
-    .doc(`${this.auth.userUid}`)
     .collection('boards')
     .add(newBoard.toJSON())
-    .then((result: any) => {
+    .then(() => {
       this.loading = false;
       this.dialogRef.close();
     })
