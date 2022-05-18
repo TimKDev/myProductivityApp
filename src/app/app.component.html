@@ -15,9 +15,18 @@
 <mat-drawer-container class="example-container" autosize>
   <!-- Mit Hilfe der Syntax #someName wird eine Template Variable mit dem Namen someName definiert, in 
   der auf das entsprechende HTML Objekt referenziert wird, in diesem Fall mat-drawer. -->
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <a [routerLink]="'boards'">Kanban Boards</a>
+  <mat-drawer #drawer class="example-sidenav hide-mobile" mode="side" [opened]="true">
+    <ul class="menu-items">
+      <li [routerLink]="[fireAuth.userUid, 'boards']" *ngIf="fireAuth.loggedIn">Kanban Boards</li>
+      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn">ToDo List</li>
+      <li [routerLink]="'/'" (click)="logOut()">Log out</li>
+    </ul>
   </mat-drawer>
+
+  <!-- Das funktioniert nicht: !!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+  <!-- <mat-drawer #drawer class="example-sidenav hide-desktop" mode="over" [opened]="false">
+    <a [routerLink]="'boards'">Kanban Boards</a>
+  </mat-drawer> -->
 
   <div class="example-sidenav-content">
     <!-- Achtung: Das <router-outlet> Tag makiert nur die Stelle an der die entsprechende Routing-Komponente 
