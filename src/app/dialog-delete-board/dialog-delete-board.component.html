@@ -1,0 +1,8 @@
+<div class="main">
+  <h2>Delete Board</h2>
+  <p>Do you really want to delete the Kanban board {{data.boardName}} forever?</p>
+  <div>
+    <button mat-button (click)="dialogRef.close()">Cancle</button>
+    <button mat-raised-button color="warn" (click)="deleteBoard()">Delete</button>
+  </div>
+</div>

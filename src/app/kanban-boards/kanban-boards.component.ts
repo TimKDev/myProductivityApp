@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddBoardComponent } from '../dialog-add-board/dialog-add-board.component';
+import { DialogDeleteBoardComponent } from '../dialog-delete-board/dialog-delete-board.component';
 import { FirebaseAuthService } from '../firebase-auth.service';
+
+
 
 @Component({
   selector: 'app-kanban-boards',
@@ -37,6 +40,12 @@ export class KanbanBoardsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  deleteBoard(boardId: string, boardName: string){
+    const dialogRef = this.dialog.open(DialogDeleteBoardComponent, {
+      data :{boardId: boardId, boardName: boardName}
     });
   }
 
