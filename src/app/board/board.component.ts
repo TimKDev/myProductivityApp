@@ -12,7 +12,7 @@ import { FirebaseAuthService } from '../firebase-auth.service';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
   host: {  // Die nun folgenden HTML Attribute werden an alle <app-board> Tags angehangen:
-    style: 'height: 100%; width: 100%;'
+    style: 'height: calc(100vh - 64px); width: 100%;'
   }
 })
 export class BoardComponent implements OnInit {

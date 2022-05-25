@@ -1,5 +1,6 @@
-<h1>{{ activeBoard.name }}</h1>
-
+<div class="header">
+  <h1>{{ activeBoard.name }}</h1>
+</div>
 <div class="board-container">
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
     class="category-div">
@@ -11,9 +12,16 @@
   </mat-card>
 </div>
 
-<button mat-fab color="primary"
+<!-- <button mat-fab color="primary"
   (click)="openDialog()"
   class="add-button"
   matTooltip="Add Task">
+  <mat-icon>add</mat-icon>
+</button> -->
+
+<button mat-fab color="primary"
+  (click)="openDialog()"
+  class="add-button"
+  matTooltip="Add Column">
   <mat-icon>add</mat-icon>
 </button>
