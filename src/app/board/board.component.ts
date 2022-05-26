@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
+import { DialogAddColumnComponent } from '../dialog-add-column/dialog-add-column.component';
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
 import { FirebaseAuthService } from '../firebase-auth.service';
 
@@ -63,6 +64,15 @@ export class BoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+
+  addColumn() {
+    const dialogRef = this.dialog.open(DialogAddColumnComponent);
+    dialogRef.componentInstance.activeBoard = this.activeBoard;
+    console.log(this.activeBoard);
+    
+    dialogRef.componentInstance.activeBoardId = this.activeBoardId;
   }
 
 
