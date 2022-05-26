@@ -4,7 +4,15 @@
 <div class="board-container">
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
     class="category-div">
-    <mat-card-title>{{ col }}</mat-card-title>
+    <mat-card-title>
+      <div class="title-col">
+        {{ col }}
+        <div>
+          <mat-icon>delete</mat-icon>
+          <mat-icon>add</mat-icon>
+        </div>
+      </div>
+    </mat-card-title>
     <mat-card *ngFor="let task of allTasksBoard">
       <mat-card-title>{{ task.name }}</mat-card-title>
       <mat-card-content>{{ task.description }}</mat-card-content>

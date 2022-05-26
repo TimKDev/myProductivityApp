@@ -7,7 +7,7 @@
 
 .category-div {
   background-color: #8080802e;
-  width: 300px;
+  min-width: 250px;
   margin: 0 16px 16px 16px;
 }
 
@@ -22,5 +22,18 @@
   h1 {
     font-size: 30px;
     font-weight: 500;
+  }
+}
+
+.title-col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  mat-icon {
+    margin-right: 15px;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

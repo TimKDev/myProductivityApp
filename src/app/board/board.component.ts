@@ -70,8 +70,6 @@ export class BoardComponent implements OnInit {
   addColumn() {
     const dialogRef = this.dialog.open(DialogAddColumnComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
-    console.log(this.activeBoard);
-    
     dialogRef.componentInstance.activeBoardId = this.activeBoardId;
   }
 
