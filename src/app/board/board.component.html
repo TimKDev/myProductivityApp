@@ -2,7 +2,10 @@
   <h1>{{ activeBoard.name }}</h1>
 </div>
 <div class="board-container">
-  <mat-card *ngFor="let col of activeBoard.columns, let i = index" class="category-div">
+  <mat-card *ngFor="let col of activeBoard.columns, let i = index"
+   class="category-div" 
+   (dragover)="allowDrop($event)" 
+   (drop)="changeCol(col)">
     <mat-card-title>
       <div class="title-col">
         {{ col }}
@@ -12,10 +15,13 @@
         </div>
       </div>
     </mat-card-title>
-    <mat-card *ngFor="let task of TasksCol(i)" class="task">
-      <mat-card-title>{{ task.name }}</mat-card-title>
-      <mat-card-content>{{ task.description }}</mat-card-content>
-    </mat-card>
+    <!-- Die Event variable wird in Angular mit einem $ am Anfang markiert: -->
+    <div >
+      <mat-card *ngFor="let task of TasksCol(i)" class="task" draggable="true" (dragstart)="startDragging(task.taskId)">
+        <mat-card-title>{{ task.name }}</mat-card-title>
+        <mat-card-content>{{ task.description }}</mat-card-content>
+      </mat-card>
+    </div>
   </mat-card>
 </div>
 

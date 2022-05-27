@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   });
   allTasksBoard: MyTask[] = [];
   activeBoardId!: string;
+  currentlyDraggedElement!: string;
 
 
   constructor(
@@ -51,7 +52,7 @@ export class BoardComponent implements OnInit {
 
       this.firestore
       .collection('tasks')
-      .valueChanges()
+      .valueChanges({idField: 'taskId'})
       .subscribe((changes: any) => {
         this.allTasksBoard = changes.filter((task: any) => {
           return task.boardName == params['boardId'];
@@ -61,8 +62,8 @@ export class BoardComponent implements OnInit {
   }
 
   TasksCol(colNum: number){
-    let result: MyTask[] = [];
-    this.allTasksBoard.forEach((task: MyTask) => {
+    let result: any[] = [];
+    this.allTasksBoard.forEach((task: any) => {
       if(task.column == this.activeBoard.columns[colNum]) result.push(task);
     });
     return result;
@@ -93,5 +94,25 @@ export class BoardComponent implements OnInit {
     dialogRef.componentInstance.numCol = numCol;
   }
 
+
+  startDragging(taskId: string){
+    this.currentlyDraggedElement = taskId;
+    
+  }
+
+  allowDrop(event: any) {
+    event.preventDefault();
+  }
+
+  changeCol(col: string){
+    this.allTasksBoard.forEach((task: any) => {
+      if (!(task.taskId == this.currentlyDraggedElement)) return;
+      task.column = col;
+      this.firestore
+      .collection('tasks')
+      .doc(this.currentlyDraggedElement)
+      .update(task);
+    });
+  }
 
 }
