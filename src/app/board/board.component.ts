@@ -6,6 +6,7 @@ import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
 import { DialogAddColumnComponent } from '../dialog-add-column/dialog-add-column.component';
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
+import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col.component';
 import { FirebaseAuthService } from '../firebase-auth.service';
 
 @Component({
@@ -83,8 +84,11 @@ export class BoardComponent implements OnInit {
   }
 
 
-  openDeleteColDialog(i: number) {
-
+  openDeleteColDialog(numCol: number) {
+    const dialogRef = this.dialog.open(DialogDeleteColComponent);
+    dialogRef.componentInstance.activeBoard = this.activeBoard;
+    dialogRef.componentInstance.boardId = this.activeBoardId;
+    dialogRef.componentInstance.numCol = numCol;
   }
 
 

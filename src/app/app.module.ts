@@ -37,6 +37,7 @@ import { DialogAddBoardComponent } from './dialog-add-board/dialog-add-board.com
 import { DialogAddTaskComponent } from './dialog-add-task/dialog-add-task.component';
 import { DialogDeleteBoardComponent } from './dialog-delete-board/dialog-delete-board.component';
 import { DialogAddColumnComponent } from './dialog-add-column/dialog-add-column.component';
+import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DialogAddColumnComponent } from './dialog-add-column/dialog-add-column.
     DialogAddBoardComponent,
     DialogAddTaskComponent,
     DialogDeleteBoardComponent,
-    DialogAddColumnComponent
+    DialogAddColumnComponent,
+    DialogDeleteColComponent
   ],
   imports: [
     BrowserModule,

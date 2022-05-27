@@ -7,7 +7,7 @@
     <mat-card-title>
       <div class="title-col">
         {{ col }}
-        <div>
+        <div *ngIf="col != 'Do today' && col != 'Done'">
           <mat-icon (click)="openDeleteColDialog(i)">delete</mat-icon>
           <mat-icon (click)="openDialog(i)">add</mat-icon>
         </div>
