@@ -165,9 +165,9 @@ export class BoardComponent implements OnInit {
 
   updateTaskInFirebase(task: any){
     this.firestore
-      .collection('tasks')
-      .doc(task.taskId)
-      .update(task);
+    .collection('tasks')
+    .doc(task.taskId)
+    .update(task);
   }
 
 
