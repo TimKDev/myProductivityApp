@@ -2,18 +2,17 @@
   <h1>{{ activeBoard.name }}</h1>
 </div>
 <div class="board-container">
-  <mat-card *ngFor="let col of activeBoard.columns, let i = index"
-    class="category-div">
+  <mat-card *ngFor="let col of activeBoard.columns, let i = index" class="category-div">
     <mat-card-title>
       <div class="title-col">
         {{ col }}
-        <div *ngIf="col != 'Do today' && col != 'Done'">
-          <mat-icon (click)="openDeleteColDialog(i)">delete</mat-icon>
+        <div>
+          <mat-icon (click)="openDeleteColDialog(i)"  *ngIf="col != 'Do today' && col != 'Done'">delete</mat-icon>
           <mat-icon (click)="openDialog(i)">add</mat-icon>
         </div>
       </div>
     </mat-card-title>
-    <mat-card *ngFor="let task of TasksCol(i)">
+    <mat-card *ngFor="let task of TasksCol(i)" class="task">
       <mat-card-title>{{ task.name }}</mat-card-title>
       <mat-card-content>{{ task.description }}</mat-card-content>
     </mat-card>

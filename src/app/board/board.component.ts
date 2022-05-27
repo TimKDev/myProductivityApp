@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,6 +28,7 @@ export class BoardComponent implements OnInit {
   });
   allTasksBoard: MyTask[] = [];
   activeBoardId!: string;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -90,7 +92,6 @@ export class BoardComponent implements OnInit {
     dialogRef.componentInstance.boardId = this.activeBoardId;
     dialogRef.componentInstance.numCol = numCol;
   }
-
 
 
 }

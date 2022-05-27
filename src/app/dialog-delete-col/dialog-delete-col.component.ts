@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {MatDialogRef} from '@angular/material/dialog';
-import { filter } from 'rxjs';
+import { filter, take } from 'rxjs';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
 
@@ -27,19 +27,28 @@ export class DialogDeleteColComponent implements OnInit {
   deleteCol() {
     // Remove Tasks assoziated with this column:
     // let allTasksWithoutCol: string[] = [];
-    // this.firestore
-    // .collection('tasks')
-    // .valueChanges({idField: 'taskId'})
+    this.firestore
+    .collection('tasks')
+    .valueChanges({idField: 'taskId'})
+    .pipe(take(1))
     // .pipe(filter((task: any) => {return !(task.boardName == this.boardId && task.column == this.activeBoard.columns[this.numCol])}));
-    // .subscribe((changes: any) => {
-    //   allTasksWithoutCol = changes.forEach((task: any) => {
-    //     if(!(task.boardName == this.boardId && task.column == this.activeBoard.columns[this.numCol])) return;
-    //     allTasksWithoutCol.push(task.taskId); 
-    //     console.log(allTasksWithoutCol);  
-    //   });      
-    // });
+    .subscribe((changes: any) => {
+      changes.forEach((task: any) => {  
+        if(!(task.boardName == this.boardId && task.column == this.activeBoard.columns[this.numCol])) return;
+        this.firestore
+        .collection('tasks')
+        .doc(task.taskId)
+        .delete();
+      });    
+      this.removeCol();  
+    });
     
 
+    
+    
+  }
+
+  removeCol() {
     // Remove the Column from active Board:
     this.activeBoard.columns.splice(this.numCol, 1);
     this.firestore
