@@ -16,6 +16,7 @@ export class DialogAddTaskComponent implements OnInit {
   categories: string[] = [];
   urgencies: string[] = ['Low', 'Medium', 'High'];
   column!: string;
+  position!: number;
 
   constructor(
     private firestore: AngularFirestore,
@@ -46,7 +47,8 @@ export class DialogAddTaskComponent implements OnInit {
       numPomodoro: this.newTask.numPomodoro,
       column: this.column,
       numPomodoroDone: 0,
-      boardName: this.boardName
+      boardName: this.boardName,
+      position: this.position
     };
 
     this.firestore

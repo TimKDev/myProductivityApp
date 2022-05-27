@@ -1,7 +1,9 @@
 <div class="header">
   <h1>{{ activeBoard.name }}</h1>
 </div>
-<div class="board-container">
+
+<!-- Version ohne Material -->
+<!-- <div class="board-container">
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
    class="category-div" 
    (dragover)="allowDrop($event)" 
@@ -15,9 +17,34 @@
         </div>
       </div>
     </mat-card-title>
-    <!-- Die Event variable wird in Angular mit einem $ am Anfang markiert: -->
     <div >
       <mat-card *ngFor="let task of TasksCol(i)" class="task" draggable="true" (dragstart)="startDragging(task.taskId)">
+        <mat-card-title>{{ task.name }}</mat-card-title>
+        <mat-card-content>{{ task.description }}</mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card>
+</div> -->
+
+<!-- Version mit Material -->
+<div class="board-container" cdkDropListGroup>
+  <mat-card *ngFor="let col of activeBoard.columns, let i = index"
+   class="category-div" 
+   cdkDropList
+   (cdkDropListDropped)="drop($event, col)"
+   [cdkDropListData]="TasksCol(i)">
+    <mat-card-title>
+      <div class="title-col">
+        {{ col }}
+        <div>
+          <mat-icon (click)="openDeleteColDialog(i)"  *ngIf="col != 'Do today' && col != 'Done'">delete</mat-icon>
+          <mat-icon (click)="openDialog(i)">add</mat-icon>
+        </div>
+      </div>
+    </mat-card-title>
+    <!-- Die Event variable wird in Angular mit einem $ am Anfang markiert: -->
+    <div >
+      <mat-card *ngFor="let task of TasksCol(i)" class="task" cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>
       </mat-card>

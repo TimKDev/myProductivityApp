@@ -8,6 +8,7 @@ export class MyTask{
   numPomodoroDone!: number;
   column!: string;
   boardName!: string;
+  position!: number;
 
 
   constructor(taskJSON: any){
@@ -20,6 +21,7 @@ export class MyTask{
     this.column = taskJSON.column;
     this.numPomodoroDone = taskJSON.numPomodoroDone; 
     this.boardName = taskJSON.boardName;
+    this.position = taskJSON.position;
   }
 
   toJSON() {
@@ -32,14 +34,9 @@ export class MyTask{
       numPomodoro: this.numPomodoro,
       column: this.column,
       numPomodoroDone: this.numPomodoroDone,
-      boardName: this.boardName
+      boardName: this.boardName,
+      position: this.position
     };
-  }
-
-  equals(task: MyTask): boolean{
-    if(this.name == task.name && this.description == task.description && this.category == task.category
-      && this.urgency == task.urgency && this.numPomodoro == this.numPomodoro && this.boardName == task.boardName) return true;
-    return false;
   }
 
 

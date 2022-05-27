@@ -38,6 +38,7 @@ import { DialogAddTaskComponent } from './dialog-add-task/dialog-add-task.compon
 import { DialogDeleteBoardComponent } from './dialog-delete-board/dialog-delete-board.component';
 import { DialogAddColumnComponent } from './dialog-add-column/dialog-add-column.component';
 import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -76,8 +77,8 @@ import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.
     MatCheckboxModule,
     MatSelectModule,
     MatDividerModule,
-    NgChartsModule
-  
+    NgChartsModule,
+    DragDropModule
   ],
   providers: [
   ],
