@@ -57,10 +57,19 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  TasksCol(colNum: number){
+    let result: MyTask[] = [];
+    this.allTasksBoard.forEach((task: MyTask) => {
+      if(task.column == this.activeBoard.columns[colNum]) result.push(task);
+    });
+    return result;
+  }
+
+  openDialog(numCol: number) {
     const dialogRef = this.dialog.open(DialogAddTaskComponent);
     dialogRef.componentInstance.categories = this.activeBoard.categories;
     dialogRef.componentInstance.boardName = this.activeBoardId;
+    dialogRef.componentInstance.column = this.activeBoard.columns[numCol];
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -73,6 +82,10 @@ export class BoardComponent implements OnInit {
     dialogRef.componentInstance.activeBoardId = this.activeBoardId;
   }
 
+
+  openDeleteColDialog(i: number) {
+
+  }
 
 
 

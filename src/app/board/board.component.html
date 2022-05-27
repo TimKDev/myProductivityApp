@@ -8,12 +8,12 @@
       <div class="title-col">
         {{ col }}
         <div>
-          <mat-icon>delete</mat-icon>
-          <mat-icon>add</mat-icon>
+          <mat-icon (click)="openDeleteColDialog(i)">delete</mat-icon>
+          <mat-icon (click)="openDialog(i)">add</mat-icon>
         </div>
       </div>
     </mat-card-title>
-    <mat-card *ngFor="let task of allTasksBoard">
+    <mat-card *ngFor="let task of TasksCol(i)">
       <mat-card-title>{{ task.name }}</mat-card-title>
       <mat-card-content>{{ task.description }}</mat-card-content>
     </mat-card>

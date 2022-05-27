@@ -15,6 +15,7 @@ export class DialogAddTaskComponent implements OnInit {
   boardName!: string;
   categories: string[] = [];
   urgencies: string[] = ['Low', 'Medium', 'High'];
+  column!: string;
 
   constructor(
     private firestore: AngularFirestore,
@@ -43,7 +44,7 @@ export class DialogAddTaskComponent implements OnInit {
       dueDate: this.newTask.dueDate.getTime(),
       urgency: this.newTask.urgency,
       numPomodoro: this.newTask.numPomodoro,
-      column: ['To do', 'Do today', 'Doing', 'Done'],
+      column: this.column,
       numPomodoroDone: 0,
       boardName: this.boardName
     };
