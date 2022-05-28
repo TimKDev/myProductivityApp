@@ -11,17 +11,17 @@ export class MyTask{
   position!: number;
 
 
-  constructor(taskJSON: any){
-    this.name = taskJSON.name;
-    this.description = taskJSON.description;
-    this.category = taskJSON.category;
-    this.dueDate = new Date(taskJSON.dueDate);
-    this.urgency = taskJSON.urgency;
-    this.numPomodoro = taskJSON.numPomodoro;
-    this.column = taskJSON.column;
-    this.numPomodoroDone = taskJSON.numPomodoroDone; 
-    this.boardName = taskJSON.boardName;
-    this.position = taskJSON.position;
+  constructor(taskJSON?: any){
+    this.name = taskJSON ? taskJSON.name : '';
+    this.description = taskJSON ? taskJSON.description: '';
+    this.category = taskJSON ? taskJSON.category: '';
+    this.dueDate =  taskJSON ? new Date(taskJSON.dueDate): new Date();
+    this.urgency = taskJSON ? taskJSON.urgency: '';
+    this.numPomodoro = taskJSON ? taskJSON.numPomodoro: 0;
+    this.column = taskJSON ? taskJSON.column: '';
+    this.numPomodoroDone = taskJSON ? taskJSON.numPomodoroDone: 0; 
+    this.boardName = taskJSON ? taskJSON.boardName: '';
+    this.position = taskJSON ? taskJSON.position: 0;
   }
 
   toJSON() {

@@ -1,0 +1,86 @@
+<div class="dialog-container">
+  <mat-progress-bar *ngIf="loading"
+    mode="indeterminate"></mat-progress-bar>
+  <h1 mat-dialog-title>Update Task</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="outline" class="mr-16">
+        <mat-label>Title</mat-label>
+      <input matInput
+        [(ngModel)]="currentTask.name"
+        [disabled]="loading"
+        placeholder="Title">
+      <!-- <mat-hint>Please enter a name.</mat-hint> -->
+    </mat-form-field>
+
+    <div>
+      <mat-form-field appearance="outline" class="mr-16 full-width">
+        <mat-label>Description</mat-label>
+        <input matInput
+          [(ngModel)]="currentTask.description"
+          [disabled]="loading"
+          placeholder="Placeholder">
+        <!-- <mat-hint>Please enter a date.</mat-hint> -->
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" class="mr-16 full-width">
+        <mat-label>Due Date</mat-label>
+        <input matInput
+          [(ngModel)]="currentTask.dueDate"
+          [disabled]="loading"
+          placeholder="Placeholder"
+          [matDatepicker]="picker">
+        <!-- <mat-hint>Please enter a date.</mat-hint> -->
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Time for Task (in Pomodoro)</mat-label>
+        <input matInput 
+          type="number"
+          [(ngModel)]="currentTask.numPomodoro"
+          [disabled]="loading"
+          placeholder="Placeholder">
+        <!-- <mat-hint>Please enter a name.</mat-hint> -->
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="fill" class="mr-16">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="currentTask.category">
+          <mat-option *ngFor="let cate of activeBoard.categories" [value]="cate">
+            {{ cate }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="mr-16">
+        <mat-label>Urgency</mat-label>
+        <mat-select [(ngModel)]="currentTask.urgency">
+          <mat-option *ngFor="let urg of urgencies" [value]="urg">
+            {{ urg }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button
+      (click)="dialogRef.close()"
+      [disabled]="loading">
+      Cancle
+    </button>
+    <button mat-button
+      (click)="saveTask()"
+      [disabled]="loading"
+      cdkFocusInitial>
+      Save
+    </button>
+  </div>
+
+</div>

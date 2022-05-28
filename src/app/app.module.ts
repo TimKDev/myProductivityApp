@@ -39,6 +39,8 @@ import { DialogDeleteBoardComponent } from './dialog-delete-board/dialog-delete-
 import { DialogAddColumnComponent } from './dialog-add-column/dialog-add-column.component';
 import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { TaskDetailsComponent } from './task-details/task-details.component';
+import { TaskUpdateComponent } from './task-update/task-update.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DialogAddTaskComponent,
     DialogDeleteBoardComponent,
     DialogAddColumnComponent,
-    DialogDeleteColComponent
+    DialogDeleteColComponent,
+    TaskDetailsComponent,
+    TaskUpdateComponent
   ],
   imports: [
     BrowserModule,

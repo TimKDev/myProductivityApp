@@ -9,6 +9,8 @@ import { DialogAddColumnComponent } from '../dialog-add-column/dialog-add-column
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
 import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col.component';
 import { FirebaseAuthService } from '../firebase-auth.service';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { TaskUpdateComponent } from '../task-update/task-update.component';
 
 @Component({
   selector: 'app-board',
@@ -170,7 +172,15 @@ export class BoardComponent implements OnInit {
     .update(task);
   }
 
+  openDialogTasksDetails(taskId: string){
+    const dialogRef = this.dialog.open(TaskDetailsComponent); 
+  }
 
+  openDialogTaskUpdate(taskId: string){
+    const dialogRef = this.dialog.open(TaskUpdateComponent);
+    dialogRef.componentInstance.taskId = taskId;
+    dialogRef.componentInstance.activeBoard = this.activeBoard;
+  }
 
 
 }
