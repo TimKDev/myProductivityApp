@@ -11,7 +11,14 @@ import { MyTask } from 'src/models/task.class';
 export class DialogAddTaskComponent implements OnInit {
 
   loading = false;
-  newTask = new MyTask({});
+  newTask = new MyTask({
+    name: '',
+    description: '',
+    category: 'Work',
+    dueDate: (new Date()).getTime(),
+    urgency: 'Medium',
+    numPomodoro: 0
+  });
   boardName!: string;
   categories: string[] = [];
   urgencies: string[] = ['Low', 'Medium', 'High'];

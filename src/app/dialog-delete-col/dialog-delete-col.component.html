@@ -1,6 +1,6 @@
 <div class="main">
   <h2>Delete Column</h2>
-  <p>Do you really want to delete the column ... and all tasks associated with it? </p>
+  <p>Do you really want to delete the column {{activeBoard.columns[numCol]}} and all tasks associated with it? </p>
   <div>
     <button mat-button (click)="dialogRef.close()">Cancle</button>
     <button mat-raised-button color="warn" (click)="deleteCol()">Delete</button>

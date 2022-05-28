@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import {MatDialogRef} from '@angular/material/dialog';
-import { filter, take } from 'rxjs';
+import { take } from 'rxjs';
 import { Board } from 'src/models/board.class';
-import { MyTask } from 'src/models/task.class';
 
 @Component({
   selector: 'app-dialog-delete-col',
@@ -42,9 +41,6 @@ export class DialogDeleteColComponent implements OnInit {
       });    
       this.removeCol();  
     });
-    
-
-    
     
   }
 
