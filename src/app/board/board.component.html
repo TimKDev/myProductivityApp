@@ -12,7 +12,7 @@
       <div class="title-col">
         {{ col }}
         <div>
-          <mat-icon (click)="openDeleteColDialog(i)"  *ngIf="col != 'Do today' && col != 'Done'">delete</mat-icon>
+          <mat-icon (click)="openDeleteColDialog(i)"  *ngIf="col != 'Done'">delete</mat-icon>
           <mat-icon (click)="openDialog(i)">add</mat-icon>
         </div>
       </div>
