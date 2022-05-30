@@ -1,0 +1,40 @@
+.main-div{
+  width: 700px;
+  position: relative;
+}
+
+.delete {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.timer-div-div {
+  display: flex;
+  gap: 100px;
+  align-items: center;
+}
+
+.timer-div{
+  background-color: #ffd640bf;
+  padding: 16px;
+  margin: 8px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  span{
+    font-size: 20px;
+  }
+}

@@ -1,1 +1,71 @@
-<p>Task Details work</p>
+<div class="main-div">
+  <button mat-icon-button 
+    [matMenuTriggerFor]="taskMenu"
+    class="delete">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #taskMenu="matMenu">
+    <button mat-menu-item (click)="editTask()">Edit</button>
+    <button mat-menu-item (click)="deleteTask()">Delete</button>
+  </mat-menu>
+  <mat-card-title>{{currentTask.name}}</mat-card-title>
+  <mat-card-subtitle>Category: {{currentTask.category}}, Urgency: {{currentTask.urgency}}</mat-card-subtitle>
+  <mat-card-content>{{currentTask.description}}</mat-card-content>
+  <mat-divider></mat-divider>
+
+  <div class="timer-div-div">
+    <div class="timer-div" *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
+      <div class="timer-header">
+        <mat-icon>alarm</mat-icon>
+        <span>{{timer.clock[0]}} : {{timer.clock[1]}}</span>
+      </div>
+      <div>
+        <button mat-icon-button>
+          <mat-icon *ngIf="showPlay" (click)="playTimer()">play_arrow</mat-icon>
+          <mat-icon *ngIf="!showPlay" (click)="pauseTimer()">pause_arrow</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <span> +5min</span>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div>
+        <table>
+          <tr>
+            <td>Arbeitsphase</td>
+            <td>2/4</td>
+          </tr>
+          <tr>
+            <td>Pause</td>
+            <td>1/4</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="status-div">
+      <div *ngIf="currentTask.dueDate">
+        <span>Due Date: {{currentTask.dueDate | date : 'fullDate'}}</span>
+      </div>
+      <div>
+        <span>Number Pomodoros left: 4</span>
+      </div>
+      <div>
+        <button mat-icon-button>
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>remove</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

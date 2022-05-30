@@ -23,12 +23,15 @@ export class TaskUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.taskId);
     this.firestore
     .collection('tasks')
     .doc(this.taskId)
     .valueChanges()
     .subscribe((changes: any) => {
       this.currentTask = new MyTask(changes);
+      console.log(this.currentTask);
+      
     })
   }
 
@@ -38,6 +41,15 @@ export class TaskUpdateComponent implements OnInit {
     .collection('tasks')
     .doc(this.taskId)
     .update(this.currentTask.toJSON());
+    this.dialogRef.close();
+  }
+
+
+  deleteTask(){
+    this.firestore
+    .collection('tasks')
+    .doc(this.taskId)
+    .delete();
     this.dialogRef.close();
   }
 

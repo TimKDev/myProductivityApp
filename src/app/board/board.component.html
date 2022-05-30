@@ -17,7 +17,7 @@
         </div>
       </div>
     </mat-card-title>
-    <!-- Die Event variable wird in Angular mit einem $ am Anfang markiert: -->
+    <!-- Die Eventvariable wird in Angular mit einem $ am Anfang markiert: -->
     <div >
       <mat-card *ngFor="let task of TasksCol(i)"
        class="task" 
@@ -25,9 +25,6 @@
        cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>
-        <mat-icon (click)="openDialogTaskUpdate(task.taskId)">
-          more_vert
-        </mat-icon>
       </mat-card>
     </div>
   </mat-card>
