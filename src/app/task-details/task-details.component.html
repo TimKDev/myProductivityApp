@@ -24,13 +24,13 @@
           <mat-icon *ngIf="showPlay" (click)="playTimer()">play_arrow</mat-icon>
           <mat-icon *ngIf="!showPlay" (click)="pauseTimer()">pause_arrow</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="addFiveMinutes()">
           <span> +5min</span>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="restartTimer()">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="finishPomodoro()">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
@@ -38,7 +38,7 @@
         <table>
           <tr>
             <td>Arbeitsphase</td>
-            <td>2/4</td>
+            <td>{{currentTask.numPomodoroDone}}/{{currentTask.numPomodoro}}</td>
           </tr>
           <tr>
             <td>Pause</td>
@@ -53,7 +53,7 @@
         <span>Due Date: {{currentTask.dueDate | date : 'fullDate'}}</span>
       </div>
       <div>
-        <span>Number Pomodoros left: 4</span>
+        <span>Number Pomodoros left: {{currentTask.numPomodoro - currentTask.numPomodoroDone}}</span>
       </div>
       <div>
         <button mat-icon-button>

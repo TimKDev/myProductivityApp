@@ -1,33 +1,38 @@
 import { Injectable } from '@angular/core';
-import { MyTask } from 'src/models/task.class';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PomodoroTimerService {
 
-  currentTaskId: string = 'unset'// Vllt. entfernen.....
+  currentTaskId: string = 'unset'
   clockMinuteStart: number = 1; // Wird als Input gegeben.
   clock: [number, number] = [this.clockMinuteStart, 0];
   activeTimer!: any;
-  startTime: Date = new Date();
+  startTime = 0;
+  pauseTime = 0;
   seconds: number = 0;
   timerFinished = false;
-  timerStarted = false;
+  timerPaused = true;
+  numAddedFiveMinutes = 0;
+  timerEnd = new BehaviorSubject(false);
+  
 
   constructor() { }
 
   addSecond() {
-    if((new Date()).getTime() - this.startTime.getTime() < 1000*(this.seconds + 1)) return;
+    if((new Date()).getTime() - this.startTime < 1000*(this.seconds + 1)) return;
     this.seconds++;
     this.convertSecondsToClock();
   }
 
   convertSecondsToClock(){
     this.clock[1] = 59 - this.seconds % 60;
-    this.clock[0] = this.clockMinuteStart - 1 - Math.floor(this.seconds / 60);
+    this.clock[0] = this.clockMinuteStart - 1 - Math.floor(this.seconds / 60) + this.numAddedFiveMinutes*5;
     if(this.checkTimerFinished()){
-      this.timerFinished = true;
+      this.timerEnd.next(true);
+      this.timerEnd.next(false);
       this.restart();
     } 
   }
@@ -37,24 +42,39 @@ export class PomodoroTimerService {
   }
 
   start() {
-    if(this.timerStarted) return;
-    this.startTime = new Date();
-    this.timerStarted = true;
+    if(!this.timerPaused) return;
+    this.startTime += (new Date()).getTime() - this.pauseTime;
+    if(this.timerFinished) this.startTime = (new Date()).getTime();
+    this.timerFinished = false;
+    this.timerPaused = false;
     this.activeTimer = setInterval(() => {this.addSecond()}, 100)
   }
 
   pause() {
-    // Das wird so nicht funktioneren!!!
-    this.timerStarted = false;
+    this.timerPaused = true;
+    this.pauseTime = (new Date()).getTime();
     clearInterval(this.activeTimer);
   }
 
   restart() {
     clearInterval(this.activeTimer);
     this.seconds = 0;
+    this.numAddedFiveMinutes = 0;
     this.clock = [this.clockMinuteStart, 0];
     this.currentTaskId = 'unset';
-    this.timerStarted = false;
+    this.timerPaused = true;
+    this.timerFinished = true;
+  }
+
+  addFiveMinutes() {
+    this.numAddedFiveMinutes++;
+    this.convertSecondsToClock();
+  }
+
+  finishTimer() {
+    this.timerEnd.next(true);
+    this.timerEnd.next(false);
+    this.restart();
   }
 
 }
