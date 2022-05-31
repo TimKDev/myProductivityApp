@@ -56,10 +56,10 @@
         <span>Number Pomodoros left: {{currentTask.numPomodoro - currentTask.numPomodoroDone}}</span>
       </div>
       <div>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="addPomodoro()">
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button (click)="removePomodoro()">
           <mat-icon>remove</mat-icon>
         </button>
       </div>

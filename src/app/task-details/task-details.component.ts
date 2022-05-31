@@ -18,6 +18,7 @@ export class TaskDetailsComponent implements OnInit {
   currentTask: any = new MyTask({dueDate: new Date()});
   activeBoard: any = new Board({});
   showPlay = true;
+  subscribtion!: any;
 
   constructor(
     private firestore: AngularFirestore,
@@ -62,7 +63,7 @@ export class TaskDetailsComponent implements OnInit {
   subscribeToTimerOf(){
     if (this.timer.currentTaskId == this.taskId) return; // Stop multiple subscribtions for the same task
     this.timer.currentTaskId = this.taskId;
-    this.timer.timerEnd
+    this.subscribtion = this.timer.timerEnd
     // Mit .pipe(takeWhile(callback(value))) wird eine Observable nur noch geändert, bis die callback Funktion,
     // die als Parameter den aktuellen Value der Observable erhält, den Wert false zurück gibt. D.h. solange 
     // die callback Funktion true zurückgibt, ist man noch subscribed und sobald einmal false zurückgegeben wird,
@@ -73,16 +74,12 @@ export class TaskDetailsComponent implements OnInit {
       (this.timer.currentTaskId == this.taskId)
     )) // Stops subscribtion when all Pomodoros of the task are done or if a different task is selected for the timer
     .subscribe((timerFinished: boolean) => {
-      console.log('Check subscription');
-      
       if (!timerFinished) return;
-      console.log('Add Pomodoro');
       this.showPlay = true;
       this.currentTask.numPomodoroDone++;
       this.updateCurrentTaskInFirebase();
     })
   }
-
 
   playTimer(){
     this.showPlay = false;
@@ -97,6 +94,7 @@ export class TaskDetailsComponent implements OnInit {
 
   restartTimer(){
     this.showPlay = true;
+    this.subscribtion.unsubscribe();
     this.timer.restart();
   }
 
@@ -106,7 +104,19 @@ export class TaskDetailsComponent implements OnInit {
 
   finishPomodoro() {
     this.timer.finishTimer();
+    this.subscribtion.unsubscribe();
     this.showPlay = true;
+  }
+
+  addPomodoro() {
+    this.currentTask.numPomodoro++;
+    this.updateCurrentTaskInFirebase();
+  }
+
+  removePomodoro() {
+    if(this.currentTask.numPomodoro - this.currentTask.numPomodoroDone == 0) return;
+    this.currentTask.numPomodoro--;
+    this.updateCurrentTaskInFirebase();
   }
 
 }
