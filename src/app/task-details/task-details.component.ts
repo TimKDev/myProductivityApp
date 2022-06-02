@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs';
@@ -38,6 +38,7 @@ export class TaskDetailsComponent implements OnInit {
     })
   }
 
+
   deleteTask(){
     this.firestore
     .collection('tasks')
@@ -63,7 +64,7 @@ export class TaskDetailsComponent implements OnInit {
   subscribeToTimerOf(){
     if (this.timer.currentTaskId == this.taskId) return; // Stop multiple subscribtions for the same task
     this.timer.currentTaskId = this.taskId;
-    this.subscribtion = this.timer.timerEnd
+    this.timer.saveSubscribtion = this.timer.timerEnd
     // Mit .pipe(takeWhile(callback(value))) wird eine Observable nur noch geändert, bis die callback Funktion,
     // die als Parameter den aktuellen Value der Observable erhält, den Wert false zurück gibt. D.h. solange 
     // die callback Funktion true zurückgibt, ist man noch subscribed und sobald einmal false zurückgegeben wird,
@@ -94,7 +95,7 @@ export class TaskDetailsComponent implements OnInit {
 
   restartTimer(){
     this.showPlay = true;
-    this.subscribtion.unsubscribe();
+    this.timer.saveSubscribtion.unsubscribe();
     this.timer.restart();
   }
 
@@ -104,7 +105,7 @@ export class TaskDetailsComponent implements OnInit {
 
   finishPomodoro() {
     this.timer.finishTimer();
-    this.subscribtion.unsubscribe();
+    this.timer.saveSubscribtion.unsubscribe();
     this.showPlay = true;
   }
 

@@ -17,6 +17,7 @@ export class PomodoroTimerService {
   timerPaused = true;
   numAddedFiveMinutes = 0;
   timerEnd = new BehaviorSubject(false);
+  saveSubscribtion!: any;
   
 
   constructor() { }
@@ -57,6 +58,7 @@ export class PomodoroTimerService {
   }
 
   restart() {
+    if(!this.activeTimer) return;
     clearInterval(this.activeTimer);
     this.seconds = 0;
     this.numAddedFiveMinutes = 0;
@@ -64,6 +66,7 @@ export class PomodoroTimerService {
     this.currentTaskId = 'unset';
     this.timerPaused = true;
     this.timerFinished = true;
+    this.activeTimer = null;
   }
 
   addFiveMinutes() {
