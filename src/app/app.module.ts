@@ -41,6 +41,12 @@ import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TaskDetailsComponent } from './task-details/task-details.component';
 import { TaskUpdateComponent } from './task-update/task-update.component';
+import { NotesComponent } from './notes/notes.component';
+import { PomodoroComponent } from './pomodoro/pomodoro.component';
+import { HabitComponent } from './habit/habit.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { SettingsComponent } from './settings/settings.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +62,13 @@ import { TaskUpdateComponent } from './task-update/task-update.component';
     DialogAddColumnComponent,
     DialogDeleteColComponent,
     TaskDetailsComponent,
-    TaskUpdateComponent
+    TaskUpdateComponent,
+    NotesComponent,
+    PomodoroComponent,
+    HabitComponent,
+    StatisticsComponent,
+    SettingsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

@@ -19,12 +19,12 @@
     <ul class="menu-items">
       <li [routerLink]="[fireAuth.userUid, 'boards']" *ngIf="fireAuth.loggedIn"><mat-icon>dashboard</mat-icon>Kanban Boards</li>
       <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>reorder</mat-icon>ToDo List</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>book</mat-icon>Notes</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>alarm</mat-icon>Pomodoro Timer</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>accessibility_new</mat-icon>Habit Tracker</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>calendar_today</mat-icon>Statistics</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>build</mat-icon>Settings</li>
-      <li [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>help</mat-icon>Help</li>
+      <li [routerLink]="[fireAuth.userUid, 'notes']" *ngIf="fireAuth.loggedIn"><mat-icon>book</mat-icon>Notes</li>
+      <li [routerLink]="[fireAuth.userUid, 'pomodoro']" *ngIf="fireAuth.loggedIn"><mat-icon>alarm</mat-icon>Pomodoro Timer</li>
+      <li [routerLink]="[fireAuth.userUid, 'habit']" *ngIf="fireAuth.loggedIn"><mat-icon>accessibility_new</mat-icon>Habit Tracker</li>
+      <li [routerLink]="[fireAuth.userUid, 'statistics']" *ngIf="fireAuth.loggedIn"><mat-icon>calendar_today</mat-icon>Statistics</li>
+      <li [routerLink]="[fireAuth.userUid, 'settings']" *ngIf="fireAuth.loggedIn"><mat-icon>build</mat-icon>Settings</li>
+      <li [routerLink]="[fireAuth.userUid, 'help']" *ngIf="fireAuth.loggedIn"><mat-icon>help</mat-icon>Help</li>
       <li [routerLink]="'/'" (click)="logOut()"><mat-icon>account_circle</mat-icon>Log out</li>
     </ul>
   </mat-drawer>

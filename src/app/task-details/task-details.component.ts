@@ -42,7 +42,7 @@ export class TaskDetailsComponent implements OnInit {
   deleteTask(){
     this.firestore
     .collection('tasks')
-    .doc(this.currentTask.taskId)
+    .doc(this.taskId)
     .delete();
     this.dialogRef.close();
   }
