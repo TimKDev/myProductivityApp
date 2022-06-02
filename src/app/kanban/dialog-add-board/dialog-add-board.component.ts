@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Board } from 'src/models/board.class';
-import { FirebaseAuthService } from '../firebase-auth.service';
+import { FirebaseAuthService } from '../../firebase-auth.service';
 
 @Component({
   selector: 'app-dialog-add-board',

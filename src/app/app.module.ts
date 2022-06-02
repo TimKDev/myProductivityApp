@@ -28,41 +28,26 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 // Das folgende Modul kann verwendet werden, um Diagramme zu erstellen:  
 import { NgChartsModule } from 'ng2-charts';
-import { KanbanBoardsComponent } from './kanban-boards/kanban-boards.component';
-import { BoardComponent } from './board/board.component';
+
 import { LoginComponent } from './login/login.component';
 import { DialogAddAccountComponent } from './dialog-add-account/dialog-add-account.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
-import { DialogAddBoardComponent } from './dialog-add-board/dialog-add-board.component';
-import { DialogAddTaskComponent } from './dialog-add-task/dialog-add-task.component';
-import { DialogDeleteBoardComponent } from './dialog-delete-board/dialog-delete-board.component';
-import { DialogAddColumnComponent } from './dialog-add-column/dialog-add-column.component';
-import { DialogDeleteColComponent } from './dialog-delete-col/dialog-delete-col.component';
+
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import { TaskDetailsComponent } from './task-details/task-details.component';
-import { TaskUpdateComponent } from './task-update/task-update.component';
 import { NotesComponent } from './notes/notes.component';
 import { PomodoroComponent } from './pomodoro/pomodoro.component';
 import { HabitComponent } from './habit/habit.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HelpComponent } from './help/help.component';
+import { KanbanModule } from './kanban/kanban.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    KanbanBoardsComponent,
-    BoardComponent,
     LoginComponent,
     DialogAddAccountComponent,
     TodoListComponent,
-    DialogAddBoardComponent,
-    DialogAddTaskComponent,
-    DialogDeleteBoardComponent,
-    DialogAddColumnComponent,
-    DialogDeleteColComponent,
-    TaskDetailsComponent,
-    TaskUpdateComponent,
     NotesComponent,
     PomodoroComponent,
     HabitComponent,
@@ -94,10 +79,10 @@ import { HelpComponent } from './help/help.component';
     MatSelectModule,
     MatDividerModule,
     NgChartsModule,
-    DragDropModule
+    DragDropModule,
+    KanbanModule
   ],
-  providers: [
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

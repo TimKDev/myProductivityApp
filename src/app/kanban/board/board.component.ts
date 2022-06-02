@@ -8,7 +8,7 @@ import { MyTask } from 'src/models/task.class';
 import { DialogAddColumnComponent } from '../dialog-add-column/dialog-add-column.component';
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
 import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col.component';
-import { FirebaseAuthService } from '../firebase-auth.service';
+import { FirebaseAuthService } from '../../firebase-auth.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskUpdateComponent } from '../task-update/task-update.component';
 

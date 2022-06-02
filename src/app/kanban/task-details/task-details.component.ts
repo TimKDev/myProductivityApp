@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
-import { PomodoroTimerService } from '../pomodoro-timer.service';
+import { PomodoroTimerService } from '../../pomodoro-timer.service';
 import { TaskUpdateComponent } from '../task-update/task-update.component';
 
 @Component({
@@ -47,11 +47,13 @@ export class TaskDetailsComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
   editTask(){
     const dialogRef = this.dialog.open(TaskUpdateComponent);
     dialogRef.componentInstance.taskId = this.taskId;
     dialogRef.componentInstance.activeBoard = this.activeBoard;
   }
+
 
   updateCurrentTaskInFirebase(){
     this.firestore
