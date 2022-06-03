@@ -10,7 +10,6 @@ import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.compo
 import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col.component';
 import { FirebaseAuthService } from '../../Services/firebase-auth.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
-import { TaskUpdateComponent } from '../task-update/task-update.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
 
 @Component({
