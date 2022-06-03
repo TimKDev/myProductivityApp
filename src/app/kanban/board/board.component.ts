@@ -11,6 +11,7 @@ import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col
 import { FirebaseAuthService } from '../../Services/firebase-auth.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
+import { DialogEditColOrderComponent } from '../dialog-edit-col-order/dialog-edit-col-order.component';
 
 @Component({
   selector: 'app-board',
@@ -180,7 +181,9 @@ export class BoardComponent implements OnInit {
 
 
   openDialogEditPosition(){
-
+    const dialogRef = this.dialog.open(DialogEditColOrderComponent); 
+    dialogRef.componentInstance.activeBoard = this.activeBoard;
+    dialogRef.componentInstance.boardId = this.activeBoardId;
   }
 
   openDialogEditName(numCol: number) {

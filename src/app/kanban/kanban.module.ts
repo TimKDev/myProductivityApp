@@ -12,6 +12,7 @@ import { TaskDetailsComponent } from './task-details/task-details.component';
 import { TaskUpdateComponent } from './task-update/task-update.component';
 import { DialogEditColNameComponent } from './dialog-edit-col-name/dialog-edit-col-name.component';
 import { ExternalModulesModule } from '../external-modules.module';
+import { DialogEditColOrderComponent } from './dialog-edit-col-order/dialog-edit-col-order.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ExternalModulesModule } from '../external-modules.module';
     DialogDeleteColComponent,
     TaskDetailsComponent,
     TaskUpdateComponent,
-    DialogEditColNameComponent
+    DialogEditColNameComponent,
+    DialogEditColOrderComponent
   ],
   imports: [
     ExternalModulesModule,

@@ -1,0 +1,24 @@
+<div class="dialog-container">
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+  <h1 mat-dialog-title>Change Column Position</h1>
+
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <div class="example-box" *ngFor="let col of colArray" cdkDrag>
+      <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+      {{col}}
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button color="primary"
+      (click)="dialogRef.close()">
+      Cancle
+    </button>
+    <button mat-raised-button color="primary"
+      (click)="saveChangedColPosition()">
+      Save
+    </button>
+  </div>
+
+</div>

@@ -37,12 +37,15 @@ export class DialogEditColNameComponent implements OnInit {
         this.firestore
         .collection('tasks')
         .doc(task.taskId)
-        .update(task);
+        .update(task)
+        .then(() => {
+          this.changeNameColumn(newName);
+        });
       });    
     });
   }
 
-  changeNameColumnForBoard(newName: string) {
+  changeNameColumn(newName: string) {
     this.activeBoard.columns[this.numCol] = newName;
     this.firestore
     .collection('boards')
@@ -52,9 +55,5 @@ export class DialogEditColNameComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  changeNameColumn(newName: string) {
-    this.changeNameColumnForTasks(newName);
-    this.changeNameColumnForBoard(newName);
-  }
 
 }
