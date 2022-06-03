@@ -84,6 +84,30 @@ import { DialogEditColNameComponent } from './dialog-edit-col-name/dialog-edit-c
     DragDropModule
   ],
   exports: [
+    CommonModule,
+    BrowserModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule,
+    AngularFirestoreModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDividerModule,
+    NgChartsModule,
+    DragDropModule
   ]
 })
 export class KanbanModule { }
