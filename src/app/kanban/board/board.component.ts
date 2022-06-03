@@ -173,9 +173,10 @@ export class BoardComponent implements OnInit {
     .update(task);
   }
 
-  openDialogTasksDetails(taskId: string){
+  openDialogTasksDetails(taskId: string, currentTask: MyTask){
     const dialogRef = this.dialog.open(TaskDetailsComponent); 
     dialogRef.componentInstance.taskId = taskId;
+    dialogRef.componentInstance.currentTask = currentTask;
     dialogRef.componentInstance.activeBoard = this.activeBoard;
   }
 

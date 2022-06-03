@@ -30,7 +30,7 @@
     <div >
       <mat-card *ngFor="let task of TasksCol(i)"
        class="task" 
-       (click)="openDialogTasksDetails(task.taskId)"
+       (click)="openDialogTasksDetails(task.taskId, task)"
        cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>

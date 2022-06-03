@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { FirebaseAuthService } from './Services/firebase-auth.service';
+import { PomodoroTimerService } from './Services/pomodoro-timer.service';
+import { TaskDetailsComponent } from './kanban/task-details/task-details.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +15,10 @@ export class AppComponent {
   showFiller = false;
 
   constructor(
-    public fireAuth: FirebaseAuthService
+    public fireAuth: FirebaseAuthService,
+    private firestore: AngularFirestore,
+    public dialog: MatDialog,
+    public timer: PomodoroTimerService
   ){ }
 
   ngOnInit() {
@@ -24,5 +31,18 @@ export class AppComponent {
 
   logOut() {
     this.fireAuth.logOut();
+  }
+
+  openDialogTaskDetails() {
+    const dialogRef = this.dialog.open(TaskDetailsComponent);
+    console.log(this.timer.currentTaskId);
+    console.log( this.timer.currentTask);
+    console.log(this.timer.activeBoard);
+    
+    
+    
+    dialogRef.componentInstance.taskId = this.timer.currentTaskId;
+    dialogRef.componentInstance.currentTask = this.timer.currentTask;
+    dialogRef.componentInstance.activeBoard = this.timer.activeBoard;
   }
 }

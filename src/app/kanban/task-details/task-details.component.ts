@@ -66,6 +66,8 @@ export class TaskDetailsComponent implements OnInit {
   subscribeToTimerOf(){
     if (this.timer.currentTaskId == this.taskId) return; // Stop multiple subscribtions for the same task
     this.timer.currentTaskId = this.taskId;
+    this.timer.activeBoard = this.activeBoard;
+    this.timer.currentTask = this.currentTask;
     this.timer.saveSubscribtion = this.timer.timerEnd
     // Mit .pipe(takeWhile(callback(value))) wird eine Observable nur noch geändert, bis die callback Funktion,
     // die als Parameter den aktuellen Value der Observable erhält, den Wert false zurück gibt. D.h. solange 

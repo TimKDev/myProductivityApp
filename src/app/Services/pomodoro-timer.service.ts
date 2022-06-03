@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Board } from 'src/models/board.class';
+import { MyTask } from 'src/models/task.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PomodoroTimerService {
-
-  currentTaskId: string = 'unset'
+  currentTask!: MyTask;
+  currentTaskId: string = 'unset';
+  activeBoard!: Board;
   clockMinuteStart: number = 1; // Wird als Input gegeben.
   clock: [number, number] = [this.clockMinuteStart, 0];
   activeTimer!: any;
@@ -78,6 +81,11 @@ export class PomodoroTimerService {
     this.timerEnd.next(true);
     this.timerEnd.next(false);
     this.restart();
+  }
+
+  isTimerActive() {
+    if (this.activeTimer) return true;
+    return false;
   }
 
 }

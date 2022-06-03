@@ -16,6 +16,7 @@
 
 .example-sidenav {
   padding: 20px;
+  width: 300px;
 }
 
 .menu-items {
@@ -33,5 +34,29 @@
     &:hover {
       background-color: rgba(0, 	0, 0, 0.04);
     }
+  }
+}
+
+.active-link {
+  background-color: rgba(0, 	0, 0, 0.1);
+  &:hover {
+    background-color: rgba(0, 	0, 0, 0.1)!important;
+  }
+}
+
+.primary-button {
+  &:hover {
+    background-color: #4e2b89;
+  }
+}
+
+.timer {
+  margin-right: 10px;
+  padding: 0 16px;
+  border-radius: 4px;
+  text-align: center;
+  &:hover {
+    background-color: #4e2b89;
+    cursor: pointer;
   }
 }
