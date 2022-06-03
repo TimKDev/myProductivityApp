@@ -3,34 +3,33 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
-import { AppRoutingModule } from './app-routing.module';
-import { KanbanRoutingModule } from './kanban/kanban-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { DialogAddAccountComponent } from './dialog-add-account/dialog-add-account.component';
-import { TodoListComponent } from './todo-list/todo-list.component';
-import { NotesComponent } from './notes/notes.component';
-import { PomodoroComponent } from './pomodoro/pomodoro.component';
-import { HabitComponent } from './habit/habit.component';
-import { StatisticsComponent } from './statistics/statistics.component';
-import { SettingsComponent } from './settings/settings.component';
-import { HelpComponent } from './help/help.component';
+import { AppRoutingModule } from './app-routing.module';
 import { KanbanModule } from './kanban/kanban.module';
+import { KanbanRoutingModule } from './kanban/kanban-routing.module';
+import { LoginModule } from './login/login.module';
+import { LoginRoutingModule } from './login/login-routing.module';
+import { TodoModule } from './todo/todo.module';
+import { TodoRoutingModule } from './todo/todo-routing.module';
+import { NotesModule } from './notes/notes.module';
+import { NotesRoutingModule } from './notes/notes-routing.module';
+import { PomodoroTimerModule } from './pomodoro-timer/pomodoro-timer.module';
+import { PomodoroTimerRoutingModule } from './pomodoro-timer/pomodoro-timer-routing.module';
+import { HabitsModule } from './habits/habits.module';
+import { HabitsRoutingModule } from './habits/habits-routing.module';
+import { StatisticModule } from './statistic/statistic.module';
+import { StatisticRoutingModule } from './statistic/statistic-routing.module';
+import { SettingsModule } from './settings/settings.module';
+import { SettingsRoutingModule } from './settings/settings-routing.module';
+import { HelpModule } from './help/help.module';
+import { HelpRoutingModule } from './help/help-routing.module';
+
 import { ExternalModulesModule } from './external-modules.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    DialogAddAccountComponent,
-    TodoListComponent,
-    NotesComponent,
-    PomodoroComponent,
-    HabitComponent,
-    StatisticsComponent,
-    SettingsComponent,
-    HelpComponent
+    AppComponent
   ],
   imports: [
     AngularFirestoreModule,
@@ -38,6 +37,22 @@ import { ExternalModulesModule } from './external-modules.module';
     AppRoutingModule,
     KanbanRoutingModule, 
     KanbanModule,
+    LoginModule,
+    LoginRoutingModule,
+    TodoModule,
+    TodoRoutingModule,
+    NotesModule,
+    NotesRoutingModule,
+    PomodoroTimerModule,
+    PomodoroTimerRoutingModule,
+    HabitsModule,
+    HabitsRoutingModule,
+    StatisticModule,
+    StatisticRoutingModule,
+    SettingsModule,
+    SettingsRoutingModule,
+    HelpModule,
+    HelpRoutingModule,
     ExternalModulesModule
   ],
   exports: [],
