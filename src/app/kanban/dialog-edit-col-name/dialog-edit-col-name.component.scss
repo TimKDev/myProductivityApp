@@ -4,20 +4,7 @@
     position: absolute;
     left: -24px;
     right: -24px;
-    top: -24px;
+    top: -56px;
     width: calc(100% + 48px);
   }
-}
-
-.delete {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.title {
-  width: 100%;
 }

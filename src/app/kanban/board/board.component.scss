@@ -63,6 +63,20 @@
 }
 
 
+.delete {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 .task {
   margin-top: 8px;
   cursor: pointer;

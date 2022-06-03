@@ -59,7 +59,9 @@ import { KanbanModule } from './kanban/kanban.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    KanbanRoutingModule,
+    // Das Kanban Routing
+    KanbanRoutingModule, 
+    // KanbanModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -81,8 +83,32 @@ import { KanbanModule } from './kanban/kanban.module';
     MatSelectModule,
     MatDividerModule,
     NgChartsModule,
-    DragDropModule,
-    KanbanModule
+    DragDropModule
+  ],
+  exports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    FormsModule,
+    AngularFirestoreModule,
+    MatProgressBarModule,
+    MatMenuModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDividerModule,
+    NgChartsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

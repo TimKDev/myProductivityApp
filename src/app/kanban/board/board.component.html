@@ -11,8 +11,17 @@
     <mat-card-title>
       <div class="title-col">
         {{ col }}
-        <div>
-          <mat-icon (click)="openDeleteColDialog(i)"  *ngIf="col != 'Done'">delete</mat-icon>
+        <div class="flex-center">
+          <button mat-icon-button 
+          [matMenuTriggerFor]="taskMenu"
+          class="delete">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #taskMenu="matMenu">
+            <button mat-menu-item (click)="openDialogEditName(i)">Edit Name</button>
+            <button mat-menu-item (click)="openDialogEditPosition()">Edit Position</button>
+            <button mat-menu-item (click)="openDeleteColDialog(i)">Delete</button>
+          </mat-menu>
           <mat-icon (click)="openDialog(i)">add</mat-icon>
         </div>
       </div>

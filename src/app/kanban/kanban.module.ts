@@ -39,6 +39,7 @@ import { MatDividerModule } from '@angular/material/divider';
 // Das folgende Modul kann verwendet werden, um Diagramme zu erstellen:  
 import { NgChartsModule } from 'ng2-charts';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { DialogEditColNameComponent } from './dialog-edit-col-name/dialog-edit-col-name.component';
 
 
 
@@ -52,7 +53,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DialogAddColumnComponent,
     DialogDeleteColComponent,
     TaskDetailsComponent,
-    TaskUpdateComponent
+    TaskUpdateComponent,
+    DialogEditColNameComponent
   ],
   imports: [
     CommonModule,
@@ -82,8 +84,6 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     DragDropModule
   ],
   exports: [
-    KanbanBoardsComponent,
-    BoardComponent
   ]
 })
 export class KanbanModule { }

@@ -4,7 +4,7 @@
     mode="indeterminate"></mat-progress-bar>
   <h1 mat-dialog-title>Update Task</h1>
   <div mat-dialog-content>
-    <mat-form-field appearance="outline" class="mr-16">
+    <mat-form-field appearance="outline" class="mr-16 title">
         <mat-label>Title</mat-label>
       <input matInput
         [(ngModel)]="currentTask.name"
@@ -14,12 +14,14 @@
     </mat-form-field>
 
     <div>
-      <mat-form-field appearance="outline" class="mr-16 full-width">
+      <mat-form-field appearance="outline" class="mr-16 title">
         <mat-label>Description</mat-label>
-        <input matInput
+        <textarea matInput
           [(ngModel)]="currentTask.description"
           [disabled]="loading"
+          style="height: 70px;"
           placeholder="Placeholder">
+        </textarea>
         <!-- <mat-hint>Please enter a date.</mat-hint> -->
       </mat-form-field>
     </div>
