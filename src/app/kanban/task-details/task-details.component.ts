@@ -23,7 +23,7 @@ export class TaskDetailsComponent implements OnInit {
 
   pomodoroLenght = 1;
   pauseLenght = 2;
-  lastTimerPause = false;
+  // lastTimerPause = false;
   createdNewInstance = false;
 
   constructor(
@@ -90,19 +90,14 @@ export class TaskDetailsComponent implements OnInit {
     .subscribe((timerFinished: boolean) => {
       if (!timerFinished) return;
       this.showPlay = true;
-      if (!this.lastTimerPause){
-        this.lastTimerPause = true;
+      if (!this.timer.currentTimerPause){
+        // this.lastTimerPause = true;
         this.currentTask.numPomodoroDone++;
         this.updateCurrentTaskInFirebase();
-        if (this.currentTask.numPomodoroDone == this.currentTask.numPomodoro){
-          this.timer.currentTimerPause = true;
-          this.lastTimerPause = false;
-          return;
-        };
         this.startPauseTimer();
       }
       else {
-        this.lastTimerPause = false;
+        // this.lastTimerPause = false;
         this.startPomodoroTimer();
       }
     })
