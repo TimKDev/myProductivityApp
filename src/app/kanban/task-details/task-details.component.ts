@@ -24,6 +24,7 @@ export class TaskDetailsComponent implements OnInit {
   pomodoroLenght = 1;
   pauseLenght = 2;
   lastTimerPause = false;
+  createdNewInstance = false;
 
   constructor(
     private firestore: AngularFirestore,
@@ -33,7 +34,9 @@ export class TaskDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.timer.clockMinuteStart = this.pomodoroLenght;
+    if (this.timer.currentTaskId == this.taskId){
+      this.createdNewInstance = true; 
+    } 
     if (!this.timer.timerPaused) this.showPlay = false;
     this.firestore
     .collection('tasks')
@@ -91,6 +94,11 @@ export class TaskDetailsComponent implements OnInit {
         this.lastTimerPause = true;
         this.currentTask.numPomodoroDone++;
         this.updateCurrentTaskInFirebase();
+        if (this.currentTask.numPomodoroDone == this.currentTask.numPomodoro){
+          this.timer.currentTimerPause = true;
+          this.lastTimerPause = false;
+          return;
+        };
         this.startPauseTimer();
       }
       else {
@@ -113,7 +121,12 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   playTimer(){
-    if(this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
+    if (this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
+    if (this.createdNewInstance) {
+      this.createdNewInstance = false;
+      this.timer.currentTimerPause = false;
+      this.timer.clockMinuteStart = this.pomodoroLenght;
+    }
     this.showPlay = false;
     this.subscribeToTimerOf();
     this.timer.start();
