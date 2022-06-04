@@ -21,6 +21,7 @@ export class PomodoroTimerService {
   numAddedFiveMinutes = 0;
   timerEnd = new BehaviorSubject(false);
   saveSubscribtion!: any;
+  currentTimerPause = false;
   
 
   constructor() { }
@@ -35,9 +36,7 @@ export class PomodoroTimerService {
     this.clock[1] = 59 - this.seconds % 60;
     this.clock[0] = this.clockMinuteStart - 1 - Math.floor(this.seconds / 60) + this.numAddedFiveMinutes*5;
     if(this.checkTimerFinished()){
-      this.timerEnd.next(true);
-      this.timerEnd.next(false);
-      this.restart();
+      this.finishTimer();
     } 
   }
 

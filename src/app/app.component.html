@@ -5,7 +5,7 @@
   <span>My Productivity App</span>
   <span class="example-spacer"></span>
   <span class="timer" (click)="openDialogTaskDetails()" *ngIf="timer.isTimerActive()">
-    {{timer.clock[0]}}:{{timer.clock[1]}}
+    <span style="color: red; margin-right: 10px;" *ngIf="timer.currentTimerPause">Pause</span>{{timer.clock[0]}}:{{timer.clock[1]}} 
   </span>
   <button mat-flat-button color="primary" class="primary-button" (click)="logOut()">Log out</button>
 </mat-toolbar>
@@ -15,15 +15,15 @@
   der auf das entsprechende HTML Objekt referenziert wird, in diesem Fall mat-drawer. -->
   <mat-drawer #drawer class="example-sidenav hide-mobile" mode="side" [opened]="true">
     <ul class="menu-items">
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'boards']" *ngIf="fireAuth.loggedIn"><mat-icon>dashboard</mat-icon>Kanban Boards</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>reorder</mat-icon>ToDo List</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'notes']" *ngIf="fireAuth.loggedIn"><mat-icon>book</mat-icon>Notes</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'pomodoro']" *ngIf="fireAuth.loggedIn"><mat-icon>alarm</mat-icon>Pomodoro Timer</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'habit']" *ngIf="fireAuth.loggedIn"><mat-icon>accessibility_new</mat-icon>Habit Tracker</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'statistics']" *ngIf="fireAuth.loggedIn"><mat-icon>calendar_today</mat-icon>Statistics</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'settings']" *ngIf="fireAuth.loggedIn"><mat-icon>build</mat-icon>Settings</li>
-      <li  routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'help']" *ngIf="fireAuth.loggedIn"><mat-icon>help</mat-icon>Help</li>
-      <li  [routerLink]="'/'" (click)="logOut()"><mat-icon>account_circle</mat-icon>Log out</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'boards']" *ngIf="fireAuth.loggedIn"><mat-icon>dashboard</mat-icon>Kanban Boards</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>reorder</mat-icon>ToDo List</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'notes']" *ngIf="fireAuth.loggedIn"><mat-icon>book</mat-icon>Notes</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'pomodoro']" *ngIf="fireAuth.loggedIn"><mat-icon>alarm</mat-icon>Pomodoro Timer</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'habit']" *ngIf="fireAuth.loggedIn"><mat-icon>accessibility_new</mat-icon>Habit Tracker</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'statistics']" *ngIf="fireAuth.loggedIn"><mat-icon>calendar_today</mat-icon>Statistics</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'settings']" *ngIf="fireAuth.loggedIn"><mat-icon>build</mat-icon>Settings</li>
+      <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'help']" *ngIf="fireAuth.loggedIn"><mat-icon>help</mat-icon>Help</li>
+      <li [routerLink]="'/'" (click)="logOut()"><mat-icon>account_circle</mat-icon>Log out</li>
     </ul>
   </mat-drawer>
 

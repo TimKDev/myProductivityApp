@@ -12,6 +12,7 @@ import { FirebaseAuthService } from '../../Services/firebase-auth.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
 import { DialogEditColOrderComponent } from '../dialog-edit-col-order/dialog-edit-col-order.component';
+import { PomodoroTimerService } from 'src/app/Services/pomodoro-timer.service';
 
 @Component({
   selector: 'app-board',
@@ -40,7 +41,8 @@ export class BoardComponent implements OnInit {
     private route: ActivatedRoute,
     private firestore: AngularFirestore,
     public auth: FirebaseAuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public timer: PomodoroTimerService
   ) { }
 
   ngOnInit(): void {

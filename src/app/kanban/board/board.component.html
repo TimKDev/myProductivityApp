@@ -30,6 +30,10 @@
     <div >
       <mat-card *ngFor="let task of TasksCol(i)"
        class="task" 
+       [ngClass]="{
+         'timer-bg-active' : timer.currentTaskId == task.taskId && !timer.currentTimerPause,
+         'timer-bg-pause' : timer.currentTaskId == task.taskId && timer.currentTimerPause
+        }"
        (click)="openDialogTasksDetails(task.taskId, task)"
        cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>

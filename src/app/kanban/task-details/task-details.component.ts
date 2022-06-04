@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { takeWhile } from 'rxjs';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
@@ -20,6 +21,10 @@ export class TaskDetailsComponent implements OnInit {
   showPlay = true;
   subscribtion!: any;
 
+  pomodoroLenght = 1;
+  pauseLenght = 2;
+  lastTimerPause = false;
+
   constructor(
     private firestore: AngularFirestore,
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
@@ -28,6 +33,7 @@ export class TaskDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.timer.clockMinuteStart = this.pomodoroLenght;
     if (!this.timer.timerPaused) this.showPlay = false;
     this.firestore
     .collection('tasks')
@@ -81,12 +87,33 @@ export class TaskDetailsComponent implements OnInit {
     .subscribe((timerFinished: boolean) => {
       if (!timerFinished) return;
       this.showPlay = true;
-      this.currentTask.numPomodoroDone++;
-      this.updateCurrentTaskInFirebase();
+      if (!this.lastTimerPause){
+        this.lastTimerPause = true;
+        this.currentTask.numPomodoroDone++;
+        this.updateCurrentTaskInFirebase();
+        this.startPauseTimer();
+      }
+      else {
+        this.lastTimerPause = false;
+        this.startPomodoroTimer();
+      }
     })
   }
 
+  startPauseTimer() {
+    this.timer.currentTimerPause = true;
+    this.timer.clockMinuteStart = this.pauseLenght;
+    setTimeout(() => {this.playTimer();}, 0);
+  }
+
+  startPomodoroTimer() { 
+    this.timer.currentTimerPause = false;
+    this.timer.clockMinuteStart = this.pomodoroLenght;
+    setTimeout(() => {this.playTimer();}, 0);
+  }
+
   playTimer(){
+    if(this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
     this.showPlay = false;
     this.subscribeToTimerOf();
     this.timer.start();
@@ -104,6 +131,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   addFiveMinutes() {
+    if(this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
     this.timer.addFiveMinutes();
   }
 

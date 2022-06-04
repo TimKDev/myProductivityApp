@@ -14,7 +14,9 @@
   <mat-divider></mat-divider>
 
   <div class="timer-div-div">
-    <div class="timer-div" *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
+    <div class="timer-div"
+      [ngClass]="{'timer-bg-pause' : lastTimerPause, 'timer-bg-pomodoro' : !lastTimerPause}"
+      *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
       <div class="timer-header">
         <mat-icon>alarm</mat-icon>
         <span>{{timer.clock[0]}} : {{timer.clock[1]}}</span>
@@ -40,9 +42,9 @@
             <td>Arbeitsphase</td>
             <td>{{currentTask.numPomodoroDone}}/{{currentTask.numPomodoro}}</td>
           </tr>
-          <tr>
-            <td>Pause</td>
-            <td>1/4</td>
+          <tr *ngIf="lastTimerPause">
+            <td style="color: red;">Pause</td>
+            <td></td>
           </tr>
         </table>
       </div>
