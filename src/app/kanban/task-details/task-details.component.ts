@@ -34,7 +34,7 @@ export class TaskDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.timer.currentTaskId == this.taskId){
+    if (this.timer.currentTaskId != this.taskId){
       this.createdNewInstance = true; 
     } 
     if (!this.timer.timerPaused) this.showPlay = false;
