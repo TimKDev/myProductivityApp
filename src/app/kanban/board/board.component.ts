@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ import { PomodoroTimerService } from 'src/app/Services/pomodoro-timer.service';
     style: 'height: calc(100vh - 64px); width: 100%;'
   }
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 
   activeBoard: Board = new Board({
     name: '',
@@ -33,6 +33,7 @@ export class BoardComponent implements OnInit {
   allTasksBoard: MyTask[] = [];
   activeBoardId!: string;
   currentlyDraggedElement!: string;
+  taskToUpdateArray: MyTask[] = []; 
 
   // allTasksCol: MyTask[][] = [];
 
@@ -68,6 +69,17 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.saveTaskToUpdateToFirestore();
+  }
+
+  saveTaskToUpdateToFirestore(){
+    this.taskToUpdateArray.forEach((task: any) => {
+      this.updateTaskInFirebase(task);
+    });
+    this.taskToUpdateArray = [];
+  }
+
   TasksCol(colNum: number){
     let result: any[] = [];
     this.allTasksBoard.forEach((task: any) => {
@@ -79,6 +91,7 @@ export class BoardComponent implements OnInit {
   }
 
   openDialog(numCol: number) {
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddTaskComponent);
     dialogRef.componentInstance.categories = this.activeBoard.categories;
     dialogRef.componentInstance.boardName = this.activeBoardId;
@@ -91,6 +104,7 @@ export class BoardComponent implements OnInit {
 
 
   addColumn() {
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddColumnComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.activeBoardId = this.activeBoardId;
@@ -98,6 +112,7 @@ export class BoardComponent implements OnInit {
 
 
   openDeleteColDialog(numCol: number) {
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogDeleteColComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;
@@ -141,7 +156,8 @@ export class BoardComponent implements OnInit {
           task.position = event.currentIndex;
         }
       }
-      this.updateTaskInFirebase(task);
+      this.taskToUpdateArray.push(task);
+      // this.updateTaskInFirebase(task);
     });
   }
 
@@ -163,7 +179,8 @@ export class BoardComponent implements OnInit {
       else {
         return;
       }
-      this.updateTaskInFirebase(task);
+      this.taskToUpdateArray.push(task);
+      // this.updateTaskInFirebase(task);
     });         
   }
 
@@ -176,6 +193,7 @@ export class BoardComponent implements OnInit {
   }
 
   openDialogTasksDetails(taskId: string, currentTask: MyTask){
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(TaskDetailsComponent); 
     dialogRef.componentInstance.taskId = taskId;
     dialogRef.componentInstance.currentTask = currentTask;
@@ -184,12 +202,14 @@ export class BoardComponent implements OnInit {
 
 
   openDialogEditPosition(){
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogEditColOrderComponent); 
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;
   }
 
   openDialogEditName(numCol: number) {
+    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogEditColNameComponent); 
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;

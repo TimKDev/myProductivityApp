@@ -13,6 +13,7 @@ import { TaskUpdateComponent } from './task-update/task-update.component';
 import { DialogEditColNameComponent } from './dialog-edit-col-name/dialog-edit-col-name.component';
 import { ExternalModulesModule } from '../external-modules.module';
 import { DialogEditColOrderComponent } from './dialog-edit-col-order/dialog-edit-col-order.component';
+import { DialogEditBoardNameComponent } from './dialog-edit-board-name/dialog-edit-board-name.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DialogEditColOrderComponent } from './dialog-edit-col-order/dialog-edit
     TaskDetailsComponent,
     TaskUpdateComponent,
     DialogEditColNameComponent,
-    DialogEditColOrderComponent
+    DialogEditColOrderComponent,
+    DialogEditBoardNameComponent
   ],
   imports: [
     ExternalModulesModule,

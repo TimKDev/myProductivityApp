@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogAddBoardComponent } from '../dialog-add-board/dialog-add-board.component';
 import { DialogDeleteBoardComponent } from '../dialog-delete-board/dialog-delete-board.component';
 import { FirebaseAuthService } from '../../Services/firebase-auth.service';
+import { Board } from 'src/models/board.class';
+import { DialogEditBoardNameComponent } from '../dialog-edit-board-name/dialog-edit-board-name.component';
 
 
 
@@ -47,6 +49,11 @@ export class KanbanBoardsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogDeleteBoardComponent, {
       data :{boardId: boardId, boardName: boardName}
     });
+  }
+
+  openDialogEditBoardName(boardToEdit: any){
+    const dialogRef = this.dialog.open(DialogEditBoardNameComponent);
+    dialogRef.componentInstance.board = boardToEdit;
   }
 
 }

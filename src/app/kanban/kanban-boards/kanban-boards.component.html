@@ -9,9 +9,15 @@
       <td [routerLink]="[board.idBoard]">{{ board.name }}</td>
       <td [routerLink]="[board.idBoard]">{{ "Test" }}</td>
       <td [routerLink]="[board.idBoard]">{{ "Test2" }}</td>
-      <td class="delete" (click)="deleteBoard(board.idBoard, board.name)">
-        <mat-icon>delete</mat-icon>
-      </td>
+      <button mat-icon-button 
+      [matMenuTriggerFor]="taskMenu"
+      class="delete">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #taskMenu="matMenu">
+        <button mat-menu-item (click)="openDialogEditBoardName(board)">Edit Name</button>
+        <button mat-menu-item (click)="deleteBoard(board.idBoard, board.name)">Delete</button>
+      </mat-menu>
     </tr>
   </table>
 
