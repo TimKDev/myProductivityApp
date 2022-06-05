@@ -23,15 +23,12 @@ export class TaskUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.taskId);
     this.firestore
     .collection('tasks')
     .doc(this.taskId)
     .valueChanges()
     .subscribe((changes: any) => {
       this.currentTask = new MyTask(changes);
-      console.log(this.currentTask);
-      
     })
   }
 
