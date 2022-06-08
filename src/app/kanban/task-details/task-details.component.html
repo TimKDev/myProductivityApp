@@ -15,24 +15,30 @@
 
   <div class="timer-div-div">
     <div class="timer-div"
-      [ngClass]="{'timer-bg-pause' : timer.currentTimerPause, 'timer-bg-pomodoro' : !timer.currentTimerPause}"
+      [ngClass]="{'timer-bg-pause' : timer.isTimerPaused, 'timer-bg-pomodoro' : !timer.isTimerPaused}"
       *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
       <div class="timer-header">
         <mat-icon>alarm</mat-icon>
-        <span>{{timer.clock[0]}} : {{timer.clock[1]}}</span>
+        <span>{{timer.activeTimer ? timer.activeTimer.clock[0] : ''}} : {{timer.activeTimer ? timer.activeTimer.clock[1] : ''}}</span>
       </div>
       <div>
         <button mat-icon-button>
-          <mat-icon *ngIf="showPlay" (click)="playTimer()">play_arrow</mat-icon>
-          <mat-icon *ngIf="!showPlay" (click)="pauseTimer()">pause_arrow</mat-icon>
+          <mat-icon *ngIf="showPlay"
+          (click)="startTimer(); showPlay = !showPlay">
+            play_arrow
+          </mat-icon>
+          <mat-icon *ngIf="!showPlay" 
+          (click)="timer.pauseTimer(); showPlay = !showPlay">
+            pause_arrow
+          </mat-icon>
         </button>
-        <button mat-icon-button (click)="addFiveMinutes()">
+        <button mat-icon-button (click)="timer.addFiveMinutesToTimer()">
           <span> +5min</span>
         </button>
-        <button mat-icon-button (click)="restartTimer()">
+        <button mat-icon-button (click)="timer.restartTimer()">
           <mat-icon>refresh</mat-icon>
         </button>
-        <button mat-icon-button (click)="finishPomodoro()">
+        <button mat-icon-button (click)="timer.finishTimer()">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
@@ -42,7 +48,7 @@
             <td>Arbeitsphase</td>
             <td>{{currentTask.numPomodoroDone}}/{{currentTask.numPomodoro}}</td>
           </tr>
-          <tr *ngIf="timer.currentTimerPause">
+          <tr *ngIf="timer.isTimerPaused">
             <td style="color: red;">Pause</td>
             <td></td>
           </tr>

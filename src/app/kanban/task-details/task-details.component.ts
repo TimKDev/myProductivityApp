@@ -34,10 +34,6 @@ export class TaskDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.timer.currentTaskId != this.taskId){
-      this.createdNewInstance = true; 
-    } 
-    if (!this.timer.timerPaused) this.showPlay = false;
     this.firestore
     .collection('tasks')
     .doc(this.taskId)
@@ -72,82 +68,76 @@ export class TaskDetailsComponent implements OnInit {
   }
 
 
-  subscribeToTimerOf(){
-    if (this.timer.currentTaskId == this.taskId) return; // Stop multiple subscribtions for the same task
-    this.timer.currentTaskId = this.taskId;
-    this.timer.activeBoard = this.activeBoard;
-    this.timer.currentTask = this.currentTask;
-    this.timer.saveSubscribtion = this.timer.timerEnd
-    // Mit .pipe(takeWhile(callback(value))) wird eine Observable nur noch geändert, bis die callback Funktion,
-    // die als Parameter den aktuellen Value der Observable erhält, den Wert false zurück gibt. D.h. solange 
-    // die callback Funktion true zurückgibt, ist man noch subscribed und sobald einmal false zurückgegeben wird,
-    // endet die Subscribtion bzw. die Observable gibt keine neuen Werte mehr zurück. Ähnlich wie man mit take(n)
-    // nach n Änderungen des Observable Werts keine weiteren mehr zulässt, die Observable also effektive killed. 
-    .pipe(takeWhile(() => 
-      (this.currentTask.numPomodoro != this.currentTask.numPomodoroDone) && 
-      (this.timer.currentTaskId == this.taskId)
-    )) // Stops subscribtion when all Pomodoros of the task are done or if a different task is selected for the timer
-    .subscribe((timerFinished: boolean) => {
-      if (!timerFinished) return;
-      this.showPlay = true;
-      if (!this.timer.currentTimerPause){
-        // this.lastTimerPause = true;
-        this.currentTask.numPomodoroDone++;
-        this.updateCurrentTaskInFirebase();
-        this.startPauseTimer();
-      }
-      else {
-        // this.lastTimerPause = false;
-        this.startPomodoroTimer();
-      }
-    })
-  }
+  // subscribeToTimerOf(){
+  //   if (this.timer.currentTaskId == this.taskId) return; // Stop multiple subscribtions for the same task
+  //   this.timer.currentTaskId = this.taskId;
+  //   this.timer.activeBoard = this.activeBoard;
+  //   this.timer.currentTask = this.currentTask;
+  //   this.timer.saveSubscribtion = this.timer.timerEnd
+  //   // Mit .pipe(takeWhile(callback(value))) wird eine Observable nur noch geändert, bis die callback Funktion,
+  //   // die als Parameter den aktuellen Value der Observable erhält, den Wert false zurück gibt. D.h. solange 
+  //   // die callback Funktion true zurückgibt, ist man noch subscribed und sobald einmal false zurückgegeben wird,
+  //   // endet die Subscribtion bzw. die Observable gibt keine neuen Werte mehr zurück. Ähnlich wie man mit take(n)
+  //   // nach n Änderungen des Observable Werts keine weiteren mehr zulässt, die Observable also effektive killed. 
+  //   .pipe(takeWhile(() => 
+  //     (this.currentTask.numPomodoro != this.currentTask.numPomodoroDone) && 
+  //     (this.timer.currentTaskId == this.taskId)
+  //   )) // Stops subscribtion when all Pomodoros of the task are done or if a different task is selected for the timer
+  //   .subscribe((timerFinished: boolean) => {
+  //     if (!timerFinished) return;
+  //     this.showPlay = true;
+  //     if (!this.timer.currentTimerPause){
+  //       // this.lastTimerPause = true;
+  //       this.currentTask.numPomodoroDone++;
+  //       this.updateCurrentTaskInFirebase();
+  //       this.startPauseTimer();
+  //     }
+  //     else {
+  //       // this.lastTimerPause = false;
+  //       this.startPomodoroTimer();
+  //     }
+  //   })
+  // }
 
-  startPauseTimer() {
-    this.timer.currentTimerPause = true;
-    this.timer.clockMinuteStart = this.pauseLenght;
-    setTimeout(() => {this.playTimer();}, 0);
-  }
+  // startPauseTimer() {
+  //   this.timer.currentTimerPause = true;
+  //   this.timer.clockMinuteStart = this.pauseLenght;
+  //   setTimeout(() => {this.playTimer();}, 0);
+  // }
 
-  startPomodoroTimer() { 
-    this.timer.currentTimerPause = false;
-    this.timer.clockMinuteStart = this.pomodoroLenght;
-    setTimeout(() => {this.playTimer();}, 0);
-  }
+  // startPomodoroTimer() { 
+  //   this.timer.currentTimerPause = false;
+  //   this.timer.clockMinuteStart = this.pomodoroLenght;
+  //   setTimeout(() => {this.playTimer();}, 0);
+  // }
 
-  playTimer(){
-    if (this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
-    if (this.createdNewInstance) {
-      this.createdNewInstance = false;
-      this.timer.currentTimerPause = false;
-      this.timer.clockMinuteStart = this.pomodoroLenght;
-    }
-    this.showPlay = false;
-    this.subscribeToTimerOf();
-    this.timer.start();
-  }
+  
 
-  pauseTimer(){
-    this.showPlay = true;
-    this.timer.pause();
+  startTimer() {
+    this.timer.initTaskOfTimerService(this.currentTask, this.taskId, this.activeBoard);
+    this.timer.playTimer();
   }
+  // pauseTimer(){
+  //   this.showPlay = true;
+  //   this.timer.pause();
+  // }
 
-  restartTimer(){
-    this.showPlay = true;
-    this.timer.saveSubscribtion.unsubscribe();
-    this.timer.restart();
-  }
+  // restartTimer(){
+  //   this.showPlay = true;
+  //   this.timer.saveSubscribtion.unsubscribe();
+  //   this.timer.restart();
+  // }
 
-  addFiveMinutes() {
-    if(this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
-    this.timer.addFiveMinutes();
-  }
+  // addFiveMinutes() {
+  //   if(this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
+  //   this.timer.addFiveMinutes();
+  // }
 
-  finishPomodoro() {
-    this.timer.finishTimer();
-    this.timer.saveSubscribtion.unsubscribe();
-    this.showPlay = true;
-  }
+  // finishPomodoro() {
+  //   this.timer.finishTimer();
+  //   this.timer.saveSubscribtion.unsubscribe();
+  //   this.showPlay = true;
+  // }
 
   addPomodoro() {
     this.currentTask.numPomodoro++;

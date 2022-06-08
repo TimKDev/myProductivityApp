@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { BehaviorSubject, retry } from 'rxjs';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
+import { Timer } from 'src/models/timer.class';
 
 @Injectable({
   providedIn: 'root'
@@ -10,81 +12,104 @@ export class PomodoroTimerService {
   currentTask!: MyTask;
   currentTaskId: string = 'unset';
   activeBoard!: Board;
-  clockMinuteStart: number = 1; // Wird als Input gegeben.
-  clock: [number, number] = [this.clockMinuteStart, 0];
-  activeTimer!: any;
-  startTime = 0;
-  pauseTime = 0;
-  seconds: number = 0;
-  timerFinished = false;
-  timerPaused = true;
-  numAddedFiveMinutes = 0;
-  timerEnd = new BehaviorSubject(false);
-  saveSubscribtion!: any;
-  currentTimerPause = false;
+  activeTimer: any = new Timer(1);
+
+  timerSubscription!: any;
+  isTimerPaused = true;
+  isTimerInit = false;
+
+  pomodoroLenght = 10;
+  pomodoroPause = 20;
   
 
-  constructor() { }
+  constructor(private firestore: AngularFirestore) { }
 
-  addSecond() {
-    if((new Date()).getTime() - this.startTime < 1000*(this.seconds + 1)) return;
-    this.seconds++;
-    this.convertSecondsToClock();
+
+  initTaskOfTimerService(currentTask: MyTask, currentTaskId: string, activeBoard: Board){
+    this.currentTask = currentTask;
+    this.currentTaskId = currentTaskId;
+    this.activeBoard = activeBoard;
   }
 
-  convertSecondsToClock(){
-    this.clock[1] = 59 - this.seconds % 60;
-    this.clock[0] = this.clockMinuteStart - 1 - Math.floor(this.seconds / 60) + this.numAddedFiveMinutes*5;
-    if(this.checkTimerFinished()){
-      this.finishTimer();
-    } 
+  subscribeToTimerPomodoro() {
+    this.timerSubscription = this.activeTimer.timerFinished.subscribe((isTimerFinished: boolean) => {
+      if (!isTimerFinished) return;
+      this.currentTask.numPomodoroDone++;
+      this.updateCurrentTaskInFirebase();
+      this.cancleActiveTimer();
+      if (this.currentTask.numPomodoro == this.currentTask.numPomodoroDone) this.currentTaskId = 'unset';
+      else{
+        this.isTimerInit = true;
+        this.activeTimer = new Timer(this.pomodoroPause);
+        this.subscribeToTimerPause();
+        this.activeTimer.play();
+      }
+    });
   }
 
-  checkTimerFinished() {
-    return this.clock[0] == 0 && this.clock[1] == 0; 
+  subscribeToTimerPause() {
+    this.timerSubscription = this.activeTimer.timerFinished.subscribe((isTimerFinished: boolean) => {
+      if (!isTimerFinished) return;
+      this.cancleActiveTimer();
+      this.isTimerInit = true;
+      this.activeTimer = new Timer(this.pomodoroLenght);
+      this.subscribeToTimerPomodoro();
+      this.activeTimer.play();
+    });
   }
 
-  start() {
-    if(!this.timerPaused) return;
-    this.startTime += (new Date()).getTime() - this.pauseTime;
-    if(this.timerFinished) this.startTime = (new Date()).getTime();
-    this.timerFinished = false;
-    this.timerPaused = false;
-    this.activeTimer = setInterval(() => {this.addSecond()}, 100)
-  }
-
-  pause() {
-    this.timerPaused = true;
-    this.pauseTime = (new Date()).getTime();
-    clearInterval(this.activeTimer);
-  }
-
-  restart() {
-    if(!this.activeTimer) return;
-    clearInterval(this.activeTimer);
-    this.seconds = 0;
-    this.numAddedFiveMinutes = 0;
-    this.clock = [this.clockMinuteStart, 0];
-    this.currentTaskId = 'unset';
-    this.timerPaused = true;
-    this.timerFinished = true;
+  cancleActiveTimer() {
     this.activeTimer = null;
+    if (!this.timerSubscription) return;
+    console.log('unsubscribe');
+ 
+    this.timerSubscription.unsubscribe();
   }
 
-  addFiveMinutes() {
-    this.numAddedFiveMinutes++;
-    this.convertSecondsToClock();
+  updateCurrentTaskInFirebase(){
+    this.firestore
+    .collection('tasks')
+    .doc(this.currentTaskId)
+    .update(this.currentTask.toJSON());
+  }
+
+  startNewTimer(timerLenght: number) {
+    if (this.isTimerInit) return;
+    if (this.currentTask.numPomodoroDone == this.currentTask.numPomodoro) return;
+    this.isTimerInit = true;
+    this.activeTimer = new Timer(timerLenght);
+    this.subscribeToTimerPomodoro();
+  }
+
+  playTimer(){
+    if (!this.isTimerPaused) return;
+    this.isTimerPaused = false;
+    this.startNewTimer(this.pomodoroLenght);
+    this.activeTimer.play();
+  }
+
+  pauseTimer() {
+    if (this.isTimerPaused) return;
+    this.isTimerPaused = true;
+    this.activeTimer.pause();
+  }
+
+  restartTimer() {
+    this.cancleActiveTimer();
+    this.isTimerPaused = true;
+    this.currentTaskId = 'unset';
+    this.isTimerInit = false;
   }
 
   finishTimer() {
-    this.timerEnd.next(true);
-    this.timerEnd.next(false);
-    this.restart();
+    this.activeTimer.finishTimer();
+    this.isTimerPaused = true;
+    this.isTimerInit = false;
   }
 
-  isTimerActive() {
-    if (this.activeTimer) return true;
-    return false;
+  addFiveMinutesToTimer() {
+    this.activeTimer.addFiveMinutes();
   }
+
 
 }

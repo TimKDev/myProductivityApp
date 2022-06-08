@@ -1,5 +1,4 @@
 import { BehaviorSubject } from "rxjs";
-// Das ist nur in der Refactor Branch!
 
 export class Timer {
 
@@ -7,6 +6,7 @@ export class Timer {
   timerStarted = false;
   setIntervalRef!: any;
   timerFinished = new BehaviorSubject(false);
+  clock = [1,0];
   
   constructor(secondsLeft?: number){
     this.secondsLeft = secondsLeft ? secondsLeft : 10; 
@@ -14,6 +14,9 @@ export class Timer {
 
   removeSecond() {
     this.secondsLeft--;
+    console.log('secondsLeft:', this.secondsLeft);
+    
+    this.clock = this.convertTimeToClock();
     if (this.isTimerFinished()) {
       this.finishTimer();
     }
@@ -30,17 +33,21 @@ export class Timer {
 
   play() {
     if (this.timerStarted) return;
+    console.log(this.secondsLeft);
+    
     this.timerStarted = true;
     this.setIntervalRef = setInterval(() => {this.removeSecond()}, 1000);
   }
 
   pause() {
+    console.log(this.secondsLeft);
+    
     this.timerStarted = false;
     clearInterval(this.setIntervalRef);
   }
 
   convertTimeToClock(): [number, number] {
-    return [this.secondsLeft % 60, this.secondsLeft - (this.secondsLeft % 60)*60];
+    return [(this.secondsLeft - (this.secondsLeft % 60))/60, this.secondsLeft % 60];
   }
 
   addFiveMinutes() {
@@ -48,3 +55,34 @@ export class Timer {
   }
 
 }
+
+
+
+
+
+// start() {
+//   if(!this.timerPaused) return;
+//   this.startTime += (new Date()).getTime() - this.pauseTime;
+//   if(this.timerFinished) this.startTime = (new Date()).getTime();
+//   this.timerFinished = false;
+//   this.timerPaused = false;
+//   this.activeTimer = setInterval(() => {this.addSecond()}, 100)
+// }
+
+// pause() {
+//   this.timerPaused = true;
+//   this.pauseTime = (new Date()).getTime();
+//   clearInterval(this.activeTimer);
+// }
+
+// restart() {
+//   if(!this.activeTimer) return;
+//   clearInterval(this.activeTimer);
+//   this.seconds = 0;
+//   this.numAddedFiveMinutes = 0;
+//   this.clock = [this.clockMinuteStart, 0];
+//   this.currentTaskId = 'unset';
+//   this.timerPaused = true;
+//   this.timerFinished = true;
+//   this.activeTimer = null;
+// }

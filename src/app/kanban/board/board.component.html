@@ -31,8 +31,8 @@
       <mat-card *ngFor="let task of TasksCol(i)"
        class="task" 
        [ngClass]="{
-         'timer-bg-active' : timer.currentTaskId == task.taskId && !timer.currentTimerPause,
-         'timer-bg-pause' : timer.currentTaskId == task.taskId && timer.currentTimerPause
+         'timer-bg-active' : timer.currentTaskId == task.taskId && !timer.isTimerPaused,
+         'timer-bg-pause' : timer.currentTaskId == task.taskId && timer.isTimerPaused
         }"
        (click)="openDialogTasksDetails(task.taskId, task)"
        cdkDrag>
