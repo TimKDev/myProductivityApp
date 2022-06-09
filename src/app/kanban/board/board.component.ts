@@ -81,7 +81,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   unloadHandler() {
-    this.saveTaskToUpdateToFirestore();
+    // this.saveTaskToUpdateToFirestore();
   }
 
   taskPositionInTaskToUpdateArray(taskToCheck: any): number{
@@ -208,6 +208,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   updateTaskInFirebase(task: any){
+    console.log('Update to Firebase');
+    
     this.firestore
     .collection('tasks')
     .doc(task.taskId)
