@@ -19,7 +19,7 @@
       *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
       <div class="timer-header">
         <mat-icon>alarm</mat-icon>
-        <span>{{timer.activeTimer ? timer.activeTimer.clock[0] : '00'}} : {{timer.activeTimer ? timer.activeTimer.clock[1] : '00'}}</span>
+        <span>{{timer.activeTimer ? (timer.activeTimer.clock[0] | clock) : clockInit[0] | clock}} : {{timer.activeTimer ? (timer.activeTimer.clock[1] | clock) : clockInit[1]}}</span>
       </div>
       <div>
         <button mat-icon-button>

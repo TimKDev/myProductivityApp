@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -49,7 +49,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.activeBoardId = params['boardId'];
-
       this.firestore
       .collection('boards')
       .doc(params['boardId'])
@@ -81,6 +80,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.saveTaskToUpdateToFirestore();
   }
 
+  unloadHandler() {
+    this.saveTaskToUpdateToFirestore();
+  }
+
   taskPositionInTaskToUpdateArray(taskToCheck: any): number{
     return this.taskToUpdateArray.findIndex((task: any) => {
       return task.taskId == taskToCheck.taskId;
@@ -98,6 +101,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.taskToUpdateArray.forEach((task: any) => {
       this.updateTaskInFirebase(task);
     });
+
     this.taskToUpdateArray = [];
   }
 
@@ -118,9 +122,6 @@ export class BoardComponent implements OnInit, OnDestroy {
     dialogRef.componentInstance.boardName = this.activeBoardId;
     dialogRef.componentInstance.column = this.activeBoard.columns[numCol];
     dialogRef.componentInstance.position = this.TasksCol(numCol).length;
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
 
@@ -210,7 +211,8 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.firestore
     .collection('tasks')
     .doc(task.taskId)
-    .update(task);
+    .update(task)
+    // .then(() => {console.log('Task updeted');} );
   }
 
   openDialogTasksDetails(taskId: string, currentTask: MyTask){

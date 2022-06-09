@@ -2,7 +2,7 @@
   <h1>{{ activeBoard.name }}</h1>
 </div>
 
-<div class="board-container" cdkDropListGroup>
+<div class="board-container" cdkDropListGroup (window:beforeunload)="unloadHandler()">
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
    class="category-div" 
    cdkDropList

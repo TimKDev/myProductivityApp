@@ -25,7 +25,7 @@ export class Timer {
 
   finishTimer() {
     this.timerFinished.next(true);
-    this.pause();
+    // this.pause();
   }
 
   isTimerFinished() {
@@ -50,6 +50,7 @@ export class Timer {
 
   addFiveMinutes() {
     this.secondsLeft += 5*60;
+    this.clock = this.convertTimeToClock();
   }
 
 }

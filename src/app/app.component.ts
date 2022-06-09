@@ -35,12 +35,6 @@ export class AppComponent {
 
   openDialogTaskDetails() {
     const dialogRef = this.dialog.open(TaskDetailsComponent);
-    console.log(this.timer.currentTaskId);
-    console.log( this.timer.currentTask);
-    console.log(this.timer.activeBoard);
-    
-    
-    
     dialogRef.componentInstance.taskId = this.timer.currentTaskId;
     dialogRef.componentInstance.currentTask = this.timer.currentTask;
     dialogRef.componentInstance.activeBoard = this.timer.activeBoard;

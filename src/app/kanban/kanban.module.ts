@@ -14,6 +14,7 @@ import { DialogEditColNameComponent } from './dialog-edit-col-name/dialog-edit-c
 import { ExternalModulesModule } from '../external-modules.module';
 import { DialogEditColOrderComponent } from './dialog-edit-col-order/dialog-edit-col-order.component';
 import { DialogEditBoardNameComponent } from './dialog-edit-board-name/dialog-edit-board-name.component';
+import { ClockPipe } from './clock.pipe';
 
 @NgModule({
   declarations: [
@@ -28,12 +29,15 @@ import { DialogEditBoardNameComponent } from './dialog-edit-board-name/dialog-ed
     TaskUpdateComponent,
     DialogEditColNameComponent,
     DialogEditColOrderComponent,
-    DialogEditBoardNameComponent
+    DialogEditBoardNameComponent,
+    ClockPipe
   ],
   imports: [
     ExternalModulesModule,
     CommonModule
   ],
-  exports: []
+  exports: [
+    ClockPipe
+  ]
 })
 export class KanbanModule { }

@@ -17,6 +17,8 @@ export class TaskDetailsComponent implements OnInit {
   currentTask: any = new MyTask({dueDate: new Date()});
   activeBoard: any = new Board({});
 
+  clockInit = [0, 10];
+
 
   constructor(
     private firestore: AngularFirestore,

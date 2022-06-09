@@ -5,7 +5,7 @@
   <span>My Productivity App</span>
   <span class="example-spacer"></span>
   <span class="timer" (click)="openDialogTaskDetails()" *ngIf="timer.activeTimer && timer.currentTaskId != 'unset'">
-    <span style="color: red; margin-right: 10px;" *ngIf="!timer.isPomodoro">Pause</span>{{timer.activeTimer.clock[0]}}:{{timer.activeTimer.clock[1]}} 
+    <span style="color: red; margin-right: 10px;" *ngIf="!timer.isPomodoro">Pause</span>{{timer.activeTimer.clock[0] | clock}}:{{timer.activeTimer.clock[1] | clock}} 
   </span>
   <button mat-flat-button color="primary" class="primary-button" (click)="logOut()">Log out</button>
 </mat-toolbar>

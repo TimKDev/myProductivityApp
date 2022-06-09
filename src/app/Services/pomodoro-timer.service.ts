@@ -105,7 +105,8 @@ export class PomodoroTimerService {
   }
 
   restartTimer() {
-    if(!this.activeTimer || this.isTaskFinished()) return;
+    if(!this.activeTimer || !this.isTimerInit) return;
+    if(this.isTaskFinished()) return;
     this.cancleActiveTimer();
     this.isTimerPaused = true;
     this.currentTaskId = 'unset';
@@ -114,14 +115,14 @@ export class PomodoroTimerService {
   }
 
   finishTimer() {
-    if(!this.activeTimer || this.isTaskFinished()) return;
+    if(!this.activeTimer || !this.isTimerInit) return;
+    if(this.isTaskFinished()) return;
     this.activeTimer.finishTimer();
-    this.isTimerPaused = true;
-    this.isTimerInit = false;
   }
 
   addFiveMinutesToTimer() {
-    if(!this.activeTimer || this.isTaskFinished()) return;
+    if(!this.activeTimer || !this.isTimerInit) return;
+    if(this.isTaskFinished()) return;
     this.activeTimer.addFiveMinutes();
   }
 
