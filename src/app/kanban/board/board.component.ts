@@ -33,7 +33,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   allTasksBoard: MyTask[] = [];
   activeBoardId!: string;
   currentlyDraggedElement!: string;
-  taskToUpdateArray: MyTask[] = []; 
+  taskToUpdateArray: any = []; 
 
   // allTasksCol: MyTask[][] = [];
 
@@ -62,8 +62,16 @@ export class BoardComponent implements OnInit, OnDestroy {
       .collection('tasks')
       .valueChanges({idField: 'taskId'})
       .subscribe((changes: any) => {
-        this.allTasksBoard = changes.filter((task: any) => {
+        this.allTasksBoard = changes
+        .filter((task: any) => {
           return task.boardName == params['boardId'];
+        })
+        .map((task: any) => {
+          if (this.isTaskInTaskToUpdateArray(task)){
+            task.column = this.taskToUpdateArray.find((taskToUpdate: any) => taskToUpdate.taskId == task.taskId).column;     
+            task.position = this.taskToUpdateArray.find((taskToUpdate: any) => taskToUpdate.taskId == task.taskId).position;
+          }
+          return task
         });        
       });
     });
@@ -71,6 +79,19 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.saveTaskToUpdateToFirestore();
+  }
+
+  taskPositionInTaskToUpdateArray(taskToCheck: any): number{
+    return this.taskToUpdateArray.findIndex((task: any) => {
+      return task.taskId == taskToCheck.taskId;
+    })
+  }
+
+  isTaskInTaskToUpdateArray(taskToCheck: any) {
+    for (let i = 0; i < this.taskToUpdateArray.length; i++) {
+      if (this.taskToUpdateArray[i].taskId == taskToCheck.taskId) return true;
+    }
+    return false;
   }
 
   saveTaskToUpdateToFirestore(){
@@ -91,7 +112,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   openDialog(numCol: number) {
-    this.saveTaskToUpdateToFirestore();
+    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddTaskComponent);
     dialogRef.componentInstance.categories = this.activeBoard.categories;
     dialogRef.componentInstance.boardName = this.activeBoardId;
@@ -104,7 +125,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   addColumn() {
-    this.saveTaskToUpdateToFirestore();
+    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddColumnComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.activeBoardId = this.activeBoardId;
@@ -112,7 +133,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   openDeleteColDialog(numCol: number) {
-    this.saveTaskToUpdateToFirestore();
+    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogDeleteColComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;

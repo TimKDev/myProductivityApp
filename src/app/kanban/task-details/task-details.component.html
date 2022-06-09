@@ -15,20 +15,20 @@
 
   <div class="timer-div-div">
     <div class="timer-div"
-      [ngClass]="{'timer-bg-pause' : timer.isTimerPaused, 'timer-bg-pomodoro' : !timer.isTimerPaused}"
+      [ngClass]="{'timer-bg-pause' : !timer.isPomodoro, 'timer-bg-pomodoro' : timer.isPomodoro}"
       *ngIf="timer.currentTaskId == taskId || timer.currentTaskId == 'unset'">
       <div class="timer-header">
         <mat-icon>alarm</mat-icon>
-        <span>{{timer.activeTimer ? timer.activeTimer.clock[0] : ''}} : {{timer.activeTimer ? timer.activeTimer.clock[1] : ''}}</span>
+        <span>{{timer.activeTimer ? timer.activeTimer.clock[0] : '00'}} : {{timer.activeTimer ? timer.activeTimer.clock[1] : '00'}}</span>
       </div>
       <div>
         <button mat-icon-button>
-          <mat-icon *ngIf="showPlay"
-          (click)="startTimer(); showPlay = !showPlay">
+          <mat-icon *ngIf="timer.isTimerPaused"
+          (click)="startTimer()">
             play_arrow
           </mat-icon>
-          <mat-icon *ngIf="!showPlay" 
-          (click)="timer.pauseTimer(); showPlay = !showPlay">
+          <mat-icon *ngIf="!timer.isTimerPaused" 
+          (click)="timer.pauseTimer()">
             pause_arrow
           </mat-icon>
         </button>
@@ -48,7 +48,7 @@
             <td>Arbeitsphase</td>
             <td>{{currentTask.numPomodoroDone}}/{{currentTask.numPomodoro}}</td>
           </tr>
-          <tr *ngIf="timer.isTimerPaused">
+          <tr *ngIf="!timer.isPomodoro">
             <td style="color: red;">Pause</td>
             <td></td>
           </tr>

@@ -1,3 +1,4 @@
+import { throwMatDuplicatedDrawerError } from "@angular/material/sidenav";
 import { BehaviorSubject } from "rxjs";
 
 export class Timer {
@@ -6,16 +7,16 @@ export class Timer {
   timerStarted = false;
   setIntervalRef!: any;
   timerFinished = new BehaviorSubject(false);
-  clock = [1,0];
+  clock = [0,10];
   
   constructor(secondsLeft?: number){
     this.secondsLeft = secondsLeft ? secondsLeft : 10; 
+    console.log(this.secondsLeft);
+    this.clock = this.convertTimeToClock();
   }
 
   removeSecond() {
     this.secondsLeft--;
-    console.log('secondsLeft:', this.secondsLeft);
-    
     this.clock = this.convertTimeToClock();
     if (this.isTimerFinished()) {
       this.finishTimer();
@@ -33,15 +34,12 @@ export class Timer {
 
   play() {
     if (this.timerStarted) return;
-    console.log(this.secondsLeft);
     
     this.timerStarted = true;
     this.setIntervalRef = setInterval(() => {this.removeSecond()}, 1000);
   }
 
   pause() {
-    console.log(this.secondsLeft);
-    
     this.timerStarted = false;
     clearInterval(this.setIntervalRef);
   }
