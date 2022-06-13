@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ import { PomodoroTimerService } from 'src/app/Services/pomodoro-timer.service';
     style: 'height: calc(100vh - 64px); width: 100%;'
   }
 })
-export class BoardComponent implements OnInit, OnDestroy {
+export class BoardComponent implements OnInit {
 
   activeBoard: Board = new Board({
     name: '',
@@ -61,6 +61,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       .collection('tasks')
       .valueChanges({idField: 'taskId'})
       .subscribe((changes: any) => {
+        // console.log('Get tasks from Firebase');
+        
         this.allTasksBoard = changes
         .filter((task: any) => {
           return task.boardName == params['boardId'];
@@ -70,19 +72,12 @@ export class BoardComponent implements OnInit, OnDestroy {
             task.column = this.taskToUpdateArray.find((taskToUpdate: any) => taskToUpdate.taskId == task.taskId).column;     
             task.position = this.taskToUpdateArray.find((taskToUpdate: any) => taskToUpdate.taskId == task.taskId).position;
           }
-          return task
+          return task;
         });        
       });
     });
   }
 
-  ngOnDestroy(): void {
-    this.saveTaskToUpdateToFirestore();
-  }
-
-  unloadHandler() {
-    // this.saveTaskToUpdateToFirestore();
-  }
 
   taskPositionInTaskToUpdateArray(taskToCheck: any): number{
     return this.taskToUpdateArray.findIndex((task: any) => {
@@ -97,13 +92,16 @@ export class BoardComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  saveTaskToUpdateToFirestore(){
-    this.taskToUpdateArray.forEach((task: any) => {
-      this.updateTaskInFirebase(task);
-    });
-
-    this.taskToUpdateArray = [];
+  addTaskToTaskToUpdate(task: any) {
+    if(!this.isTaskInTaskToUpdateArray(task)){
+      this.taskToUpdateArray.push(task);
+      return;
+    } 
+    this.taskToUpdateArray[this.taskPositionInTaskToUpdateArray(task)] = task;
+    console.log(this.taskToUpdateArray);
+    
   }
+
 
   TasksCol(colNum: number){
     let result: any[] = [];
@@ -116,7 +114,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   openDialog(numCol: number) {
-    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddTaskComponent);
     dialogRef.componentInstance.categories = this.activeBoard.categories;
     dialogRef.componentInstance.boardName = this.activeBoardId;
@@ -126,7 +123,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   addColumn() {
-    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogAddColumnComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.activeBoardId = this.activeBoardId;
@@ -134,7 +130,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   openDeleteColDialog(numCol: number) {
-    // this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogDeleteColComponent);
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;
@@ -178,8 +173,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           task.position = event.currentIndex;
         }
       }
-      this.taskToUpdateArray.push(task);
-      // this.updateTaskInFirebase(task);
+      this.updateTaskInFirebase(task);
     });
   }
 
@@ -201,24 +195,23 @@ export class BoardComponent implements OnInit, OnDestroy {
       else {
         return;
       }
-      this.taskToUpdateArray.push(task);
-      // this.updateTaskInFirebase(task);
+      this.updateTaskInFirebase(task);
     });         
   }
 
 
   updateTaskInFirebase(task: any){
-    console.log('Update to Firebase');
-    
+    this.addTaskToTaskToUpdate(task); 
     this.firestore
     .collection('tasks')
     .doc(task.taskId)
     .update(task)
-    // .then(() => {console.log('Task updeted');} );
+    .then(() => {
+      this.taskToUpdateArray.splice(this.taskPositionInTaskToUpdateArray(task), 1);
+    });
   }
 
   openDialogTasksDetails(taskId: string, currentTask: MyTask){
-    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(TaskDetailsComponent); 
     dialogRef.componentInstance.taskId = taskId;
     dialogRef.componentInstance.currentTask = currentTask;
@@ -227,14 +220,12 @@ export class BoardComponent implements OnInit, OnDestroy {
 
 
   openDialogEditPosition(){
-    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogEditColOrderComponent); 
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;
   }
 
   openDialogEditName(numCol: number) {
-    this.saveTaskToUpdateToFirestore();
     const dialogRef = this.dialog.open(DialogEditColNameComponent); 
     dialogRef.componentInstance.activeBoard = this.activeBoard;
     dialogRef.componentInstance.boardId = this.activeBoardId;
