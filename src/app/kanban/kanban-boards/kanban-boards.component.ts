@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddBoardComponent } from '../dialog-add-board/dialog-add-board.component';
 import { DialogDeleteBoardComponent } from '../dialog-delete-board/dialog-delete-board.component';
-import { FirebaseAuthService } from '../../Services/firebase-auth.service';
+import { FirebaseAuthService } from '../../../Services/firebase-auth.service';
 import { Board } from 'src/models/board.class';
 import { DialogEditBoardNameComponent } from '../dialog-edit-board-name/dialog-edit-board-name.component';
 

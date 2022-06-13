@@ -8,11 +8,11 @@ import { MyTask } from 'src/models/task.class';
 import { DialogAddColumnComponent } from '../dialog-add-column/dialog-add-column.component';
 import { DialogAddTaskComponent } from '../dialog-add-task/dialog-add-task.component';
 import { DialogDeleteColComponent } from '../dialog-delete-col/dialog-delete-col.component';
-import { FirebaseAuthService } from '../../Services/firebase-auth.service';
+import { FirebaseAuthService } from '../../../Services/firebase-auth.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
 import { DialogEditColOrderComponent } from '../dialog-edit-col-order/dialog-edit-col-order.component';
-import { PomodoroTimerService } from 'src/app/Services/pomodoro-timer.service';
+import { PomodoroTimerService } from 'src/Services/pomodoro-timer.service';
 
 @Component({
   selector: 'app-board',

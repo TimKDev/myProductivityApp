@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebaseAuthService } from './Services/firebase-auth.service';
-import { PomodoroTimerService } from './Services/pomodoro-timer.service';
+import { FirebaseAuthService } from '../Services/firebase-auth.service';
+import { PomodoroTimerService } from '../Services/pomodoro-timer.service';
 import { TaskDetailsComponent } from './kanban/task-details/task-details.component';
 
 @Component({

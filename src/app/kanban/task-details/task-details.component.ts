@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
-import { PomodoroTimerService } from '../../Services/pomodoro-timer.service';
+import { PomodoroTimerService } from '../../../Services/pomodoro-timer.service';
 import { TaskUpdateComponent } from '../task-update/task-update.component';
 
 @Component({

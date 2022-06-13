@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddAccountComponent } from '../dialog-add-account/dialog-add-account.component';
-import { FirebaseAuthService } from '../../Services/firebase-auth.service';
+import { FirebaseAuthService } from '../../../Services/firebase-auth.service';
 
 @Component({
   selector: 'app-login',
