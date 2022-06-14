@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseAuthService } from '../Services/firebase-auth.service';
@@ -13,13 +14,22 @@ import { TaskDetailsComponent } from './kanban/task-details/task-details.compone
 export class AppComponent {
   title = 'myProductivityApp';
   showFiller = false;
+  mobileQuery!: MediaQueryList;
+
+  private _mobileQueryListener!: () => void;
 
   constructor(
     public fireAuth: FirebaseAuthService,
     private firestore: AngularFirestore,
     public dialog: MatDialog,
-    public timer: PomodoroTimerService
-  ){ }
+    public timer: PomodoroTimerService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher
+  ){
+    this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
+    this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+   }
 
   ngOnInit() {
     const email = localStorage.getItem('userAuthEMailT24');

@@ -21,6 +21,9 @@ export class PomodoroTimerService {
 
   pomodoroLenght = 10;
   pomodoroPause = 20;
+
+  ALARM_CLOCK = new Audio('../assets/alarm.mp3');
+  isMuted = false;
   
 
   constructor(private firestore: AngularFirestore) { }
@@ -37,6 +40,10 @@ export class PomodoroTimerService {
     this.timerSubscription = this.activeTimer.timerFinished.subscribe((isTimerFinished: boolean) => {
       if (!isTimerFinished) return;
       this.currentTask.numPomodoroDone++;
+      if (!this.isMuted){
+        this.ALARM_CLOCK.play();
+      }
+      this.isMuted = false;
       this.updateCurrentTaskInFirebase();
       this.cancleActiveTimer();
       if (this.isTaskFinished()){
@@ -58,6 +65,10 @@ export class PomodoroTimerService {
     this.isPomodoro = false;
     this.timerSubscription = this.activeTimer.timerFinished.subscribe((isTimerFinished: boolean) => {
       if (!isTimerFinished) return;
+      if (!this.isMuted){
+        this.ALARM_CLOCK.play();
+      }
+      this.isMuted = false;
       this.cancleActiveTimer();
       this.isTimerInit = true;
       this.activeTimer = new Timer(this.pomodoroLenght);
@@ -117,6 +128,7 @@ export class PomodoroTimerService {
   finishTimer() {
     if(!this.activeTimer || !this.isTimerInit) return;
     if(this.isTaskFinished()) return;
+    this.isMuted = true;
     this.activeTimer.finishTimer();
   }
 

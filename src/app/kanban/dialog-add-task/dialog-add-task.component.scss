@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
 .dialog-container {
   position: relative;
   mat-progress-bar {
@@ -11,4 +16,13 @@
 
 .title {
   width: 100%;
+}
+
+.delete {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  &:hover {
+    cursor: pointer;
+  }
 }

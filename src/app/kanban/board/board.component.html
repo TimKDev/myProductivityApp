@@ -9,7 +9,8 @@
    (cdkDropListDropped)="drop($event, col)"
    [cdkDropListData]="TasksCol(i)">
     <mat-card-title>
-      <div class="title-col">
+      <!-- Desktop View: -->
+      <div class="title-col" *ngIf="!isMobileView()">
         {{ col }}
         <div class="flex-center">
           <button mat-icon-button 
@@ -23,6 +24,23 @@
             <button mat-menu-item (click)="openDeleteColDialog(i)">Delete</button>
           </mat-menu>
           <mat-icon (click)="openDialog(i)">add</mat-icon>
+        </div>
+      </div>
+      <!-- Mobile View: -->
+      <div class="title-col" *ngIf="isMobileView()">
+        {{ col }}
+        <div class="flex-center">
+          <button mat-icon-button 
+          [matMenuTriggerFor]="taskMenu"
+          class="delete">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #taskMenu="matMenu">
+            <button mat-menu-item (click)="openDialog(i)">Add Task</button>
+            <button mat-menu-item (click)="openDialogEditName(i)">Edit Name</button>
+            <button mat-menu-item (click)="openDialogEditPosition()">Edit Position</button>
+            <button mat-menu-item (click)="openDeleteColDialog(i)">Delete</button>
+          </mat-menu>
         </div>
       </div>
     </mat-card-title>

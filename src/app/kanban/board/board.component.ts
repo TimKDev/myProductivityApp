@@ -113,8 +113,17 @@ export class BoardComponent implements OnInit {
     });
   }
 
+  isMobileView() {
+    return window.innerWidth < 1000;
+  }
+
   openDialog(numCol: number) {
-    const dialogRef = this.dialog.open(DialogAddTaskComponent);
+    const dialogRef = this.dialog.open(DialogAddTaskComponent, {
+      maxWidth: this.isMobileView() ? '100vw' : 'auto',
+      maxHeight: this.isMobileView() ? '100vh' : 'auto',
+      height: this.isMobileView() ? '100%' : 'auto',
+      width: this.isMobileView() ? '100%' : 'auto'
+    });
     dialogRef.componentInstance.categories = this.activeBoard.categories;
     dialogRef.componentInstance.boardName = this.activeBoardId;
     dialogRef.componentInstance.column = this.activeBoard.columns[numCol];
@@ -212,7 +221,12 @@ export class BoardComponent implements OnInit {
   }
 
   openDialogTasksDetails(taskId: string, currentTask: MyTask){
-    const dialogRef = this.dialog.open(TaskDetailsComponent); 
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      maxWidth: this.isMobileView() ? '100vw' : 'auto',
+      maxHeight: this.isMobileView() ? '100vh' : 'auto',
+      height: this.isMobileView() ? '100%' : 'auto',
+      width: this.isMobileView() ? '100%' : 'auto'
+    }); 
     dialogRef.componentInstance.taskId = taskId;
     dialogRef.componentInstance.currentTask = currentTask;
     dialogRef.componentInstance.activeBoard = this.activeBoard;

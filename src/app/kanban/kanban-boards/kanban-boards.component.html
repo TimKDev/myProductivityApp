@@ -5,10 +5,11 @@
       <th>Active Tasks</th>
       <th>Progress</th>
     </tr>
+    
     <tr *ngFor="let board of allBoards, let i = index">
       <td [routerLink]="[board.idBoard]">{{ board.name }}</td>
-      <td [routerLink]="[board.idBoard]">{{ "Test" }}</td>
-      <td [routerLink]="[board.idBoard]">{{ "Test2" }}</td>
+      <td [routerLink]="[board.idBoard]">{{ getActiveTasksOf(board)}}</td>
+      <td [routerLink]="[board.idBoard]">{{ getProgressOf(board)*100 | number}}%</td>
       <button mat-icon-button 
       [matMenuTriggerFor]="taskMenu"
       class="delete">

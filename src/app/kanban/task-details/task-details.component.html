@@ -1,13 +1,17 @@
 <div class="main-div">
-  <button mat-icon-button 
-    [matMenuTriggerFor]="taskMenu"
-    class="delete">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #taskMenu="matMenu">
-    <button mat-menu-item (click)="editTask()">Edit</button>
-    <button mat-menu-item (click)="deleteTask()">Delete</button>
-  </mat-menu>
+  <div class="delete">
+    <button mat-icon-button 
+      [matMenuTriggerFor]="taskMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #taskMenu="matMenu">
+      <button mat-menu-item (click)="editTask()">Edit</button>
+      <button mat-menu-item (click)="deleteTask()">Delete</button>
+    </mat-menu>
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
   <mat-card-title>{{currentTask.name}}</mat-card-title>
   <mat-card-subtitle>Category: {{currentTask.category}}, Urgency: {{currentTask.urgency}}</mat-card-subtitle>
   <mat-card-content>{{currentTask.description}}</mat-card-content>

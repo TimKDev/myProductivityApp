@@ -1,7 +1,13 @@
 <div class="dialog-container">
   <mat-progress-bar *ngIf="loading"
     mode="indeterminate"></mat-progress-bar>
-  <h1 mat-dialog-title>Add </h1>
+  <h1 mat-dialog-title>Add Task</h1>
+  <div class="delete">
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
   <div mat-dialog-content>
     <mat-form-field appearance="outline" class="mr-16 title">
         <mat-label>Title</mat-label>

@@ -13,7 +13,7 @@
 <mat-drawer-container class="example-container" autosize>
   <!-- Mit Hilfe der Syntax #someName wird eine Template Variable mit dem Namen someName definiert, in 
   der auf das entsprechende HTML Objekt referenziert wird, in diesem Fall mat-drawer. -->
-  <mat-drawer #drawer class="example-sidenav hide-mobile" mode="side" [opened]="true">
+  <mat-drawer #drawer class="example-sidenav hide-mobile" [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="true">
     <ul class="menu-items">
       <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'boards']" *ngIf="fireAuth.loggedIn"><mat-icon>dashboard</mat-icon>Kanban Boards</li>
       <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'todo']" *ngIf="fireAuth.loggedIn"><mat-icon>reorder</mat-icon>ToDo List</li>

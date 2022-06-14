@@ -6,6 +6,7 @@ import { DialogDeleteBoardComponent } from '../dialog-delete-board/dialog-delete
 import { FirebaseAuthService } from '../../../Services/firebase-auth.service';
 import { Board } from 'src/models/board.class';
 import { DialogEditBoardNameComponent } from '../dialog-edit-board-name/dialog-edit-board-name.component';
+import { MyTask } from 'src/models/task.class';
 
 
 
@@ -17,6 +18,8 @@ import { DialogEditBoardNameComponent } from '../dialog-edit-board-name/dialog-e
 export class KanbanBoardsComponent implements OnInit {
 
   allBoards: any = [];
+  allTasks: any = [];
+  activeTasksOfBoards: number[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -26,15 +29,39 @@ export class KanbanBoardsComponent implements OnInit {
 
   ngOnInit(): void {
     this.firestore
+    .collection('tasks')
+    .valueChanges({idField: 'idTask'})
+    .subscribe((changes: any) => {
+      this.allTasks = changes;
+      
+    });
+    
+    this.firestore
     .collection('boards')
     .valueChanges({idField: 'idBoard'})
     .subscribe((changes: any) => {
-      console.log('Received changes from DB:', changes);
       this.allBoards = changes.filter((board: any) => {
         return board.author == this.auth.userUid;
       });
-      
     });
+
+    
+  }
+
+  getTasksOf(board: any) {
+    return this.allTasks.filter((task: any) => task.boardName == board.idBoard);
+  }
+
+  getActiveTasksOf(board: any) {
+    return this.getTasksOf(board).filter((task: MyTask) => task.column != 'Done').length;
+  }
+
+  getDoneTasksOf(board: any) {
+    return this.getTasksOf(board).filter((task: MyTask) => task.column == 'Done').length;
+  }
+
+  getProgressOf(board: any) {
+    return this.getDoneTasksOf(board)/(this.getActiveTasksOf(board) + this.getDoneTasksOf(board));
   }
 
   openDialog() {
