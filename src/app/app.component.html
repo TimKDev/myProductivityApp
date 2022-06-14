@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="landscape-none">
   <button mat-icon-button class="example-icon" (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
@@ -7,7 +7,7 @@
   <span class="timer" (click)="openDialogTaskDetails()" *ngIf="timer.activeTimer && timer.currentTaskId != 'unset'">
     <span style="color: red; margin-right: 10px;" *ngIf="!timer.isPomodoro">Pause</span>{{timer.activeTimer.clock[0] | clock}}:{{timer.activeTimer.clock[1] | clock}} 
   </span>
-  <button mat-flat-button color="primary" class="primary-button" (click)="logOut()">Log out</button>
+  <button mat-flat-button color="primary" class="primary-button" (click)="logOut()" *ngIf="fireAuth.loggedIn">Log out</button>
 </mat-toolbar>
 
 <mat-drawer-container class="example-container" autosize>
@@ -23,7 +23,7 @@
       <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'statistics']" *ngIf="fireAuth.loggedIn"><mat-icon>calendar_today</mat-icon>Statistics</li>
       <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'settings']" *ngIf="fireAuth.loggedIn"><mat-icon>build</mat-icon>Settings</li>
       <li routerLinkActive="active-link" [routerLink]="[fireAuth.userUid, 'help']" *ngIf="fireAuth.loggedIn"><mat-icon>help</mat-icon>Help</li>
-      <li [routerLink]="'/'" (click)="logOut()"><mat-icon>account_circle</mat-icon>Log out</li>
+      <li [routerLink]="'/'" (click)="logOut()" *ngIf="fireAuth.loggedIn"><mat-icon>account_circle</mat-icon>Log out</li>
     </ul>
   </mat-drawer>
 

@@ -17,6 +17,9 @@
 .example-sidenav {
   padding: 20px;
   width: 300px;
+  @media(max-width: 500px){
+    width: 200px;
+  }
 }
 
 .menu-items {
@@ -60,3 +63,13 @@
     cursor: pointer;
   }
 }
+
+
+@media (max-height: 500px) and (orientation:landscape) {
+    .landscape-none {
+      display: none;
+    }
+    .example-container {
+      height: 100vh;
+    }
+ }

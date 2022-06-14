@@ -1,5 +1,5 @@
 .board-container {
-  height: 90%;
+  height: calc(100vh - 138px);
   display: flex;
   justify-content: space-between;
   overflow: auto;
@@ -37,9 +37,10 @@
 }
 
 .add-button {
-  position: absolute;
+  position: fixed;
   right: 56px;
   bottom: 56px;
+  
 }
 
 .header {
@@ -47,7 +48,16 @@
   h1 {
     font-size: 30px;
     font-weight: 500;
+    margin: 0!important;
+    @media (max-width: 500px) {
+      margin: 0!important;
+      font-size: 25px;
+    }
+    @media (max-height: 500px){
+      font-size: 25px;
+    }
   }
+  
 }
 
 .title-col {
@@ -150,8 +160,29 @@
     min-width: 150px;
     max-width: unset;
   }
+
+  .add-button {
+    right: 24px;
+    bottom: 24px;
+  }
+
 }
 
+@media (max-height: 500px){
+  .add-button {
+    right: 24px;
+    bottom: 24px;
+  }
+}
+
+@media (max-height: 500px) and (orientation:landscape) {
+  :host {
+    height: 100%!important;
+  }
+  .board-container {
+    height: calc(100vh - 72px);
+  }
+}
 
 
 
