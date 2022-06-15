@@ -13,6 +13,8 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
 import { DialogEditColOrderComponent } from '../dialog-edit-col-order/dialog-edit-col-order.component';
 import { PomodoroTimerService } from 'src/Services/pomodoro-timer.service';
+import { retry } from 'rxjs';
+import { getLocaleFirstDayOfWeek } from '@angular/common';
 
 @Component({
   selector: 'app-board',
@@ -34,6 +36,8 @@ export class BoardComponent implements OnInit {
   activeBoardId!: string;
   currentlyDraggedElement!: string;
   taskToUpdateArray: any = []; 
+
+  allowDrop = true;
 
   // allTasksCol: MyTask[][] = [];
 
@@ -61,8 +65,6 @@ export class BoardComponent implements OnInit {
       .collection('tasks')
       .valueChanges({idField: 'taskId'})
       .subscribe((changes: any) => {
-        // console.log('Get tasks from Firebase');
-        
         this.allTasksBoard = changes
         .filter((task: any) => {
           return task.boardName == params['boardId'];
@@ -98,8 +100,6 @@ export class BoardComponent implements OnInit {
       return;
     } 
     this.taskToUpdateArray[this.taskPositionInTaskToUpdateArray(task)] = task;
-    console.log(this.taskToUpdateArray);
-    
   }
 
 
@@ -149,7 +149,11 @@ export class BoardComponent implements OnInit {
   drop(event: CdkDragDrop<any[]>, col: string) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      this.switchInSameCol(event, col)
+      for (let i = 0; i < event.container.data.length; i++) {
+        let newTask = event.container.data[i];
+        newTask.position = i;
+        this.updateTaskInFirebase(newTask);
+      }
     } 
     else {    
       transferArrayItem(
@@ -157,60 +161,24 @@ export class BoardComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex,
-      );
-      this.switchCol(event, col);
+      );   
+      for (let i = 0; i < event.container.data.length; i++) {
+        let newTask = event.container.data[i];
+        newTask.position = i;
+        newTask.column = col;
+        this.updateTaskInFirebase(newTask);
+      }
+      for (let i = 0; i < event.previousContainer.data.length; i++) {
+        let newTask = event.previousContainer.data[i];
+        newTask.position = i;
+        this.updateTaskInFirebase(newTask);
+      }
     }
   }
 
 
-  switchInSameCol(event: CdkDragDrop<any[]>, col: string){
-    let currentCol = col;
-    this.allTasksBoard.forEach((task: any) => {
-      if(event.previousIndex < event.currentIndex && task.column == currentCol){
-        if (task.position > event.previousIndex && task.position <= event.currentIndex){
-          task.position--;
-        }
-        else if(task.position == event.previousIndex){
-          task.position = event.currentIndex;
-        }
-      }
-      if(event.previousIndex > event.currentIndex && task.column == currentCol){
-        if (task.position >= event.currentIndex && task.position < event.previousIndex){
-          task.position++;
-        }
-        else if(task.position == event.previousIndex){
-          task.position = event.currentIndex;
-        }
-      }
-      this.updateTaskInFirebase(task);
-    });
-  }
-
-
-  switchCol(event: CdkDragDrop<any[]>, col: string){
-    let currentCol = col;
-    let previousCol =  event.container.data[event.currentIndex].column;
-    this.allTasksBoard.forEach((task: any) => {
-      if (task.column == previousCol && task.position > event.previousIndex){
-        task.position--;
-      }
-      else if( task.column == currentCol && task.position >= event.currentIndex){
-        task.position++;
-      }
-      else if(task.column == previousCol && task.position == event.previousIndex){
-        task.column = currentCol;
-        task.position = event.currentIndex;
-      }
-      else {
-        return;
-      }
-      this.updateTaskInFirebase(task);
-    });         
-  }
-
-
   updateTaskInFirebase(task: any){
-    this.addTaskToTaskToUpdate(task); 
+    this.addTaskToTaskToUpdate(task);
     this.firestore
     .collection('tasks')
     .doc(task.taskId)

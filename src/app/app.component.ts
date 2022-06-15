@@ -43,8 +43,17 @@ export class AppComponent {
     this.fireAuth.logOut();
   }
 
+  isMobileView() {
+    return window.innerWidth < 1000;
+  }
+
   openDialogTaskDetails() {
-    const dialogRef = this.dialog.open(TaskDetailsComponent);
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      maxWidth: this.isMobileView() ? '100vw' : 'auto',
+      maxHeight: this.isMobileView() ? '100vh' : 'auto',
+      height: this.isMobileView() ? '100%' : 'auto',
+      width: this.isMobileView() ? '100%' : 'auto'
+    });
     dialogRef.componentInstance.taskId = this.timer.currentTaskId;
     dialogRef.componentInstance.currentTask = this.timer.currentTask;
     dialogRef.componentInstance.activeBoard = this.timer.activeBoard;
