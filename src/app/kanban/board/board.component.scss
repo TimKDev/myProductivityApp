@@ -129,6 +129,23 @@
   background-color: #ffd640bf!important;
 }
 
+.board-div {
+  position: relative;
+}
+
+.drag-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  background-color: aqua;
+  z-index: 99;
+}
+
+
+
+
 @media (max-width: 800px){
   .mat-card-title {
     font-size: 20px;
@@ -159,6 +176,7 @@
   .category-div {
     min-width: 150px;
     max-width: unset;
+    padding-right: 30px;
   }
 
   .add-button {

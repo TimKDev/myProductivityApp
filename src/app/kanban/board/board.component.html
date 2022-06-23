@@ -2,6 +2,14 @@
   <h1>{{ activeBoard.name }}</h1>
 </div>
 
+<!-- Mouseover ist das falsche event !!!! -->
+<div class="drag-left" (mouseover)="moveWindowLeft()">
+</div>
+
+<div class="drag-right">
+
+</div>
+
 <div class="board-container" cdkDropListGroup>
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
    class="category-div" 
@@ -53,6 +61,7 @@
          'timer-bg-pause' : timer.currentTaskId == task.taskId && !timer.isPomodoro
         }"
        (click)="openDialogTasksDetails(task.taskId, task)"
+       (cdkDragStart)="startDragging()"
        cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>

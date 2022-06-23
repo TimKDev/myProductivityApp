@@ -214,4 +214,15 @@ export class BoardComponent implements OnInit {
     dialogRef.componentInstance.numCol = numCol;
   }
 
+
+  moveWindowLeft() {
+    console.log('window moving left');
+    
+  }
+
+  startDragging() {
+    console.log('start Dragging');
+    
+  }
+
 }
