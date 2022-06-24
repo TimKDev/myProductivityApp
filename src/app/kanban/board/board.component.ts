@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
@@ -38,8 +38,10 @@ export class BoardComponent implements OnInit {
   taskToUpdateArray: any = []; 
 
   allowDrop = true;
+  draggingTask = false;
 
-  // allTasksCol: MyTask[][] = [];
+  @ViewChild('colContainer') ColDiv: any;
+  intervalRef: any;
 
 
   constructor(
@@ -216,13 +218,34 @@ export class BoardComponent implements OnInit {
 
 
   moveWindowLeft() {
-    console.log('window moving left');
-    
+    if(!this.draggingTask) return;
+    this.intervalRef = setInterval(() => {
+      this.ColDiv.nativeElement.scrollLeft -= 2;
+    } ,10);
   }
+
+  stopMovingWindow() {
+    if(!this.draggingTask) return;
+    clearInterval(this.intervalRef);
+  }
+
+  moveWindowRight() {
+    if(!this.draggingTask) return;
+    this.intervalRef = setInterval(() => {
+      this.ColDiv.nativeElement.scrollLeft += 2;
+    } ,10);
+  }
+
 
   startDragging() {
     console.log('start Dragging');
+    this.draggingTask = true;
     
+  }
+
+  endDragging() {
+    console.log('end Dragging');
+    this.draggingTask = false;
   }
 
 }

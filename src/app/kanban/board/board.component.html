@@ -3,14 +3,14 @@
 </div>
 
 <!-- Mouseover ist das falsche event !!!! -->
-<div class="drag-left" (mouseover)="moveWindowLeft()">
+<div class="drag-left" (mouseenter)="moveWindowLeft()" (mouseleave)="stopMovingWindow()">
 </div>
 
-<div class="drag-right">
+<div class="drag-right" (mouseenter)="moveWindowRight()" (mouseleave)="stopMovingWindow()">
 
 </div>
 
-<div class="board-container" cdkDropListGroup>
+<div class="board-container" cdkDropListGroup #colContainer>
   <mat-card *ngFor="let col of activeBoard.columns, let i = index"
    class="category-div" 
    cdkDropList
@@ -61,7 +61,8 @@
          'timer-bg-pause' : timer.currentTaskId == task.taskId && !timer.isPomodoro
         }"
        (click)="openDialogTasksDetails(task.taskId, task)"
-       (cdkDragStart)="startDragging()"
+       (cdkDragStarted)="startDragging()"
+       (cdkDragEnded)="endDragging()"
        cdkDrag>
         <mat-card-title>{{ task.name }}</mat-card-title>
         <mat-card-content>{{ task.description }}</mat-card-content>
