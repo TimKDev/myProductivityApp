@@ -3,11 +3,20 @@
 </div>
 
 <!-- Mouseover ist das falsche event !!!! -->
-<div class="drag-left" (mouseenter)="moveWindowLeft()" (mouseleave)="stopMovingWindow()">
+<div class="drag-left" 
+  *ngIf="draggingTask"
+  (mouseenter)="moveWindowLeft()" 
+  (mouseleave)="stopMovingWindow()"
+  (touchstart)="moveWindowLeft()"
+  (touchend)="stopMovingWindow()">
 </div>
 
-<div class="drag-right" (mouseenter)="moveWindowRight()" (mouseleave)="stopMovingWindow()">
-
+<div class="drag-right"
+  *ngIf="draggingTask" 
+  (mouseenter)="moveWindowRight()" 
+  (mouseleave)="stopMovingWindow()"
+  (touchstart)="moveWindowRight()"
+  (touchend)="stopMovingWindow()">
 </div>
 
 <div class="board-container" cdkDropListGroup #colContainer>

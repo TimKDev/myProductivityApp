@@ -236,15 +236,12 @@ export class BoardComponent implements OnInit {
     } ,10);
   }
 
-
   startDragging() {
-    console.log('start Dragging');
     this.draggingTask = true;
     
   }
 
   endDragging() {
-    console.log('end Dragging');
     this.draggingTask = false;
   }
 
