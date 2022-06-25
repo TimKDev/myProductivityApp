@@ -26,20 +26,22 @@ export class DialogEditColNameComponent implements OnInit {
   }
 
   changeNameColumnForTasks(newName: string) {
+    let oldName = this.activeBoard.columns[this.numCol];
+    this.changeNameColumn(newName);
     this.firestore
     .collection('tasks')
     .valueChanges({idField: 'taskId'})
     .pipe(take(1))
     .subscribe((changes: any) => {
       changes.forEach((task: any) => {  
-        if(!(task.boardName == this.boardId && task.column == this.activeBoard.columns[this.numCol])) return;
+        if(!(task.boardName == this.boardId && task.column == oldName)) return;
         task.column = newName;
         this.firestore
         .collection('tasks')
         .doc(task.taskId)
         .update(task)
         .then(() => {
-          this.changeNameColumn(newName);
+          // this.changeNameColumn(newName);
         });
       });    
     });

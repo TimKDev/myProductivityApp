@@ -13,8 +13,7 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { DialogEditColNameComponent } from '../dialog-edit-col-name/dialog-edit-col-name.component';
 import { DialogEditColOrderComponent } from '../dialog-edit-col-order/dialog-edit-col-order.component';
 import { PomodoroTimerService } from 'src/Services/pomodoro-timer.service';
-import { retry } from 'rxjs';
-import { getLocaleFirstDayOfWeek } from '@angular/common';
+
 
 @Component({
   selector: 'app-board',
