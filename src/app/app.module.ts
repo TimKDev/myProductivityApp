@@ -11,18 +11,16 @@ import { LoginModule } from './login/login.module';
 import { LoginRoutingModule } from './login/login-routing.module';
 import { TodoModule } from './todo/todo.module';
 import { TodoRoutingModule } from './todo/todo-routing.module';
-import { NotesModule } from './notes/notes.module';
-import { NotesRoutingModule } from './notes/notes-routing.module';
 import { PomodoroTimerModule } from './pomodoro-timer/pomodoro-timer.module';
 import { PomodoroTimerRoutingModule } from './pomodoro-timer/pomodoro-timer-routing.module';
-import { HabitsModule } from './habits/habits.module';
-import { HabitsRoutingModule } from './habits/habits-routing.module';
 import { StatisticModule } from './statistic/statistic.module';
 import { StatisticRoutingModule } from './statistic/statistic-routing.module';
 import { SettingsModule } from './settings/settings.module';
 import { SettingsRoutingModule } from './settings/settings-routing.module';
 import { HelpModule } from './help/help.module';
 import { HelpRoutingModule } from './help/help-routing.module';
+import { ArchiveModule } from './archive/archive.module';
+import { ArchiveRoutingModule } from './archive/archive-routing.module';
 
 import { ExternalModulesModule } from './external-modules.module';
 
@@ -41,18 +39,16 @@ import { ExternalModulesModule } from './external-modules.module';
     LoginRoutingModule,
     TodoModule,
     TodoRoutingModule,
-    NotesModule,
-    NotesRoutingModule,
     PomodoroTimerModule,
     PomodoroTimerRoutingModule,
-    HabitsModule,
-    HabitsRoutingModule,
     StatisticModule,
     StatisticRoutingModule,
     SettingsModule,
     SettingsRoutingModule,
     HelpModule,
     HelpRoutingModule,
+    ArchiveModule,
+    ArchiveRoutingModule,
     ExternalModulesModule
   ],
   exports: [],
