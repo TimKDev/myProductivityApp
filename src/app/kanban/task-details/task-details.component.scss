@@ -1,6 +1,13 @@
 .main-div{
   max-width: 700px;
+  min-width: 500px;
   position: relative;
+}
+
+@media(max-width: 1000px){
+  .main-div{
+    min-width: unset;
+  }
 }
 
 .delete {
