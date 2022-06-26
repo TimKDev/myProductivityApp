@@ -8,7 +8,8 @@
     </button>
     <mat-menu #taskMenu="matMenu">
       <button mat-menu-item (click)="editTask()" *ngIf="!taskInArchive">Edit</button>
-      <button mat-menu-item (click)="deleteTask()">Delete</button>
+      <button mat-menu-item (click)="deleteTask()" *ngIf="!taskInArchive">Delete</button>
+      <button mat-menu-item (click)="deleteTaskInArchive()" *ngIf="taskInArchive">Delete</button>
       <button mat-menu-item (click)="addToArchive()" *ngIf="!taskInArchive">Add to Archive</button>
     </mat-menu>
     <button mat-icon-button (click)="dialogRef.close()">

@@ -13,14 +13,6 @@
       <td (click)="openDialogTasksDetails(task.taskId, task)">{{ task.name }}</td>
       <td (click)="openDialogTasksDetails(task.taskId, task)">{{ getBoardNameFromId(task.boardName) }}</td>
       <td (click)="openDialogTasksDetails(task.taskId, task)">{{ task.dueDate | date : 'fullDate' }}</td>
-      <button mat-icon-button 
-      [matMenuTriggerFor]="taskMenu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #taskMenu="matMenu">
-        <button mat-menu-item class="delete" (click)="deleteTaskFromArchive(task.taskId)">Delete</button>
-      </mat-menu>
     </tr>
   </table>
 

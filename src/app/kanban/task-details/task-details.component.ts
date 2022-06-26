@@ -112,7 +112,7 @@ export class TaskDetailsComponent implements OnInit {
   }
 
 
-  deleteTaskFromArchive() {
+  deleteTaskInArchive() {
     this.firestore
     .collection('archive')
     .doc(this.taskId)
