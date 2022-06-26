@@ -1,4 +1,6 @@
 <div class="main-div">
+  <mat-progress-bar *ngIf="loading"
+    mode="indeterminate"></mat-progress-bar>
   <div class="delete">
     <button mat-icon-button 
       [matMenuTriggerFor]="taskMenu">

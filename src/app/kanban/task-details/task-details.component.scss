@@ -2,6 +2,13 @@
   max-width: 700px;
   min-width: 500px;
   position: relative;
+  mat-progress-bar {
+    position: absolute;
+    left: -24px;
+    right: -24px;
+    top: -24px;
+    width: calc(100% + 48px);
+  }
 }
 
 @media(max-width: 1000px){
