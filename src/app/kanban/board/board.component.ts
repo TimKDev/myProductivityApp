@@ -38,6 +38,7 @@ export class BoardComponent implements OnInit {
 
   allowDrop = true;
   draggingTask = false;
+  currentlyArchiving = false;
 
   @ViewChild('colContainer') ColDiv: any;
   intervalRef: any;
@@ -113,10 +114,12 @@ export class BoardComponent implements OnInit {
       return task1.position - task2.position;
     });
   }
+  
 
   isMobileView() {
     return window.innerWidth < 1000;
   }
+
 
   openDialog(numCol: number) {
     const dialogRef = this.dialog.open(DialogAddTaskComponent, {
@@ -156,7 +159,7 @@ export class BoardComponent implements OnInit {
         this.updateTaskInFirebase(newTask);
       }
     } 
-    else {    
+    else {   
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -186,6 +189,7 @@ export class BoardComponent implements OnInit {
     .update(task)
     .then(() => {
       this.taskToUpdateArray.splice(this.taskPositionInTaskToUpdateArray(task), 1);
+      this.checkIfTasksNeedToBeArchived();
     });
   }
 
@@ -236,12 +240,41 @@ export class BoardComponent implements OnInit {
   }
 
   startDragging() {
-    this.draggingTask = true;
-    
+    this.draggingTask = true; 
   }
 
   endDragging() {
     this.draggingTask = false;
+  }
+
+  checkIfTasksNeedToBeArchived() {
+    let maxNumberOfTasksInDone = 7;
+    // Maybe check if indexOf gives -1 !!!
+    let tasksDone = this.TasksCol(this.activeBoard.columns.indexOf('Done'));
+    if (tasksDone.length < maxNumberOfTasksInDone) return;
+    tasksDone.forEach((task: any) => {
+      if(task.position < maxNumberOfTasksInDone) return;
+      this.archiveTask(task);
+    })
+  }
+
+  archiveTask(task: any){
+    if(this.currentlyArchiving) return;
+    this.currentlyArchiving = true;
+    this.firestore
+    .collection('tasks')
+    .doc(task.taskId)
+    .delete()
+    .then(() => {
+      this.firestore
+      .collection('archive')
+      .add(task)
+      .then(() => {
+        this.currentlyArchiving = false;
+      });
+    });
+
+    
   }
 
 }

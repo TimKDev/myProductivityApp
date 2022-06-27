@@ -77,30 +77,39 @@ export class TaskDetailsComponent implements OnInit {
       .valueChanges({idField: 'taskId'})
       .pipe(take(1))
       .subscribe((changes) => {
-        let numTasksUpdated = 0;
-        for (let i = 0; i < changes.length; i++) {
-          const task: any = changes[i];
-          if(task.position > this.currentTask.position){
-            // Hier werden die Positionen für alle Aufgaben aktualisiert, die an Positionen nach 
-            // der gelöschten Aufgabe folgen: 
-            task.position --;
-            this.firestore
-            .collection('tasks')
-            .doc(task.taskId)
-            .update(task)
-            .then(() => {
-              numTasksUpdated++;
-              if(numTasksUpdated == changes.length - this.currentTask.position - 1){
-                // Dies wird ausgeführt, wenn alle Aufgaben deren Position geupdated wurden auch geupdated wurden:
-                this.loading = false; 
-                this.dialogRef.close();
-              }
-            });
-          }
-        }
+        this.correctTaskPositionAfterDelete(changes);
       })
     });
   }
+
+  correctTaskPositionAfterDelete(changes: any) {
+    let numTasksUpdated = 0;
+    let taskToCorrect = false;
+    for (let i = 0; i < changes.length; i++) {
+      const task: any = changes[i];
+      if(task.position > this.currentTask.position){
+        // Hier werden die Positionen für alle Aufgaben aktualisiert, die an Positionen nach 
+        // der gelöschten Aufgabe folgen: 
+        taskToCorrect = true;
+        task.position --;
+        this.firestore
+        .collection('tasks')
+        .doc(task.taskId)
+        .update(task)
+        .then(() => {
+          numTasksUpdated++;  
+          if(numTasksUpdated == changes.length - this.currentTask.position){
+            // Dies wird ausgeführt, wenn alle Aufgaben deren Position geupdated wurden auch geupdated wurden:
+            this.loading = false; 
+            this.dialogRef.close();
+          }
+        });
+      }
+    }
+    if(!taskToCorrect) this.dialogRef.close();
+    console.log(changes);
+  }
+
 
 
   addToArchive() {
