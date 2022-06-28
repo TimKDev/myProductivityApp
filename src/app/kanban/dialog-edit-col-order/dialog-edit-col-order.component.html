@@ -2,7 +2,6 @@
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
 
   <h1 mat-dialog-title>Change Column Position</h1>
-  <!-- cdkDropListOrientation="horizontal" -->
   <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
     <div class="example-box" *ngFor="let col of colArray" cdkDrag>
       <div class="example-custom-placeholder" *cdkDragPlaceholder></div>

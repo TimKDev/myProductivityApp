@@ -67,7 +67,9 @@
        class="task" 
        [ngClass]="{
          'timer-bg-active' : timer.currentTaskId == task.taskId && timer.isPomodoro,
-         'timer-bg-pause' : timer.currentTaskId == task.taskId && !timer.isPomodoro
+         'timer-bg-pause' : timer.currentTaskId == task.taskId && !timer.isPomodoro,
+         'urgent-high-bg' : timer.currentTaskId != task.taskId && task.urgency == 'High',
+         'urgent-medium-bg' : timer.currentTaskId != task.taskId && task.urgency == 'Medium'
         }"
        (click)="openDialogTasksDetails(task.taskId, task)"
        (cdkDragStarted)="startDragging()"

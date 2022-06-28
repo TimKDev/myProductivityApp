@@ -16,7 +16,7 @@ export class DialogAddTaskComponent implements OnInit {
     description: '',
     category: 'Work',
     dueDate: (new Date()).getTime(),
-    urgency: 'Medium',
+    urgency: 'Low',
     numPomodoro: 0
   });
   boardName!: string;
