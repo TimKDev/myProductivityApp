@@ -15,5 +15,6 @@
       <td (click)="openDialogTasksDetails(task.taskId, task)">{{ task.dueDate | date : 'fullDate' }}</td>
     </tr>
   </table>
+  <button mat-raised-button color="warn" (click)="openDialogDeleteAll()" class="delete-btn">Delete All</button>
 
 </mat-card>
