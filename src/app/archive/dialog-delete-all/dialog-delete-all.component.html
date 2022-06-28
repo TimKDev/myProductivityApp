@@ -1,1 +1,10 @@
-<p>dialog-delete-all works!</p>
+<div class="main">
+  <h2>Delete all Tasks from Archive</h2>
+  <p>
+    Do you really want to delete all tasks from the archive forever (they are then also removed from the statistics section)?
+  </p>
+  <div>
+    <button mat-button (click)="dialogRef.close()">Cancle</button>
+    <button mat-raised-button color="warn" (click)="deleteAllTasksFromArchive()">Delete</button>
+  </div>
+</div>
