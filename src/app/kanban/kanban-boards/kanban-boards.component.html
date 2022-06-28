@@ -9,7 +9,7 @@
     <tr *ngFor="let board of allBoards, let i = index">
       <td [routerLink]="[board.idBoard]">{{ board.name }}</td>
       <td [routerLink]="[board.idBoard]">{{ getActiveTasksOf(board)}}</td>
-      <td [routerLink]="[board.idBoard]">{{ getProgressOf(board)*100 | number}}%</td>
+      <td [routerLink]="[board.idBoard]">{{ getProgressOf(board, i) ? (getProgressOf(board, i)*100 | number) : 0}}%</td>
       <button mat-icon-button 
       [matMenuTriggerFor]="taskMenu"
       class="delete">

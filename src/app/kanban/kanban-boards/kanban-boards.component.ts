@@ -20,6 +20,7 @@ export class KanbanBoardsComponent implements OnInit {
   allBoards: any = [];
   allTasks: any = [];
   activeTasksOfBoards: number[] = [];
+  numberDoneTasksInArchive: number[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -42,10 +43,18 @@ export class KanbanBoardsComponent implements OnInit {
     .subscribe((changes: any) => {
       this.allBoards = changes.filter((board: any) => {
         return board.author == this.auth.userUid;
-      });
+      })
+      for (let i = 0; i < this.allBoards.length; i++) {
+        const board = this.allBoards[i];
+        this.firestore
+        .collection('archive', ref => ref.where('boardName', '==', board.idBoard)
+        .where('column', '==', 'Done'))
+        .valueChanges()
+        .subscribe((changes: any) => {
+          this.numberDoneTasksInArchive[i] = changes.length;
+        });
+      }
     });
-
-    
   }
 
   getTasksOf(board: any) {
@@ -56,12 +65,12 @@ export class KanbanBoardsComponent implements OnInit {
     return this.getTasksOf(board).filter((task: MyTask) => task.column != 'Done').length;
   }
 
-  getDoneTasksOf(board: any) {
-    return this.getTasksOf(board).filter((task: MyTask) => task.column == 'Done').length;
+  getDoneTasksOf(board: any, i: number) {
+    return this.getTasksOf(board).filter((task: MyTask) => task.column == 'Done').length + this.numberDoneTasksInArchive[i];
   }
 
-  getProgressOf(board: any) {
-    return this.getDoneTasksOf(board)/(this.getActiveTasksOf(board) + this.getDoneTasksOf(board));
+  getProgressOf(board: any, i: number) {
+    return this.getDoneTasksOf(board, i)/(this.getActiveTasksOf(board) + this.getDoneTasksOf(board, i));
   }
 
   openDialog() {
