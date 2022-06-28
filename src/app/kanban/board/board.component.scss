@@ -90,7 +90,9 @@
 .task {
   margin-top: 8px;
   cursor: pointer;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-height: 200px;
   mat-icon{
     position: absolute;
     top: 10px;

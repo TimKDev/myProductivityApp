@@ -249,7 +249,6 @@ export class BoardComponent implements OnInit {
 
   checkIfTasksNeedToBeArchived() {
     let maxNumberOfTasksInDone = 10;
-    // Maybe check if indexOf gives -1 !!!
     let tasksDone = this.TasksCol(this.activeBoard.columns.indexOf('Done'));
     if (tasksDone.length < maxNumberOfTasksInDone) return;
     tasksDone.forEach((task: any) => {
