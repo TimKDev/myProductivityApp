@@ -1,1 +1,14 @@
-<p>pomodoro works!</p>
+<div class="main-div">
+  <div class="clock" 
+  [ngStyle]="{'transform': 'rotate(' + angle + 'deg)'}"
+  >
+    <mat-progress-bar
+    mode="determinate"
+    [value]="valueProgress">
+    </mat-progress-bar>
+    <div></div>
+  </div>
+</div>
+
+
+

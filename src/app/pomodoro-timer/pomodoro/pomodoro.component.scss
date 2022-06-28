@@ -1,0 +1,22 @@
+.main-div {
+
+}
+
+.clock {
+  position: relative;
+  mat-progress-bar {
+    border-radius: 100%;
+    width: 300px;
+    height: 300px;
+  }
+  div {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    height: 290px;
+    width: 290px;
+    z-index: 2;
+    background-color: white;
+    border-radius: 100%;
+  }
+}

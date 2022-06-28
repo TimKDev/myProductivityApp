@@ -75,10 +75,6 @@ export class KanbanBoardsComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogAddBoardComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   deleteBoard(boardId: string, boardName: string){
