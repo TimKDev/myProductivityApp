@@ -45,7 +45,6 @@ export class PomodoroComponent implements OnInit, DoCheck {
   getValueProgressFromClock(): number {
     if(!this.timer.activeTimer) return 0;
     this.setValueSecondsTotal();
-    console.log(this.timer.numFiveMinutesAdded);
     
     let secondsPassed: number = 300*this.timer.numFiveMinutesAdded + this.secondsTotal - this.timer.activeTimer.secondsLeft;
     let progressValueStep: number = 100/(300*this.timer.numFiveMinutesAdded + this.secondsTotal);
