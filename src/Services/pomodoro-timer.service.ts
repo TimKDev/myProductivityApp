@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, retry } from 'rxjs';
 import { Board } from 'src/models/board.class';
 import { MyTask } from 'src/models/task.class';
 import { Timer } from 'src/models/timer.class';
@@ -84,6 +83,7 @@ export class PomodoroTimerService {
   }
 
   updateCurrentTaskInFirebase(){
+    if(this.currentTaskId == 'dummy') return; // Dies ist für die Task unabhängige Pomodoro Timer Funktion
     this.firestore
     .collection('tasks')
     .doc(this.currentTaskId)
@@ -91,6 +91,7 @@ export class PomodoroTimerService {
   }
 
   isTaskFinished(){
+    if (this.currentTaskId == 'dummy') return false;
     return this.currentTask.numPomodoroDone == this.currentTask.numPomodoro;
   }
 

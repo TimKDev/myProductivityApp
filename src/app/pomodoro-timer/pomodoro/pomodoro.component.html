@@ -1,13 +1,20 @@
 <div class="main-div">
-  <div class="clock" 
-  [ngStyle]="{'transform': 'rotate(' + angle + 'deg)'}"
-  >
-    <mat-progress-bar
-    mode="determinate"
-    [value]="valueProgress">
-    </mat-progress-bar>
-    <div></div>
-  </div>
+  
+
+  
+  <span>{{timer.activeTimer ? (timer.activeTimer.clock[0] | clock) : clockInit[0] | clock}} : {{timer.activeTimer ? (timer.activeTimer.clock[1] | clock) : clockInit[1]}}</span>
+  <button mat-icon-button>
+    <mat-icon *ngIf="timer.isTimerPaused"
+    (click)="startTimer()">
+      play_arrow
+    </mat-icon>
+    <mat-icon *ngIf="!timer.isTimerPaused" 
+    (click)="timer.pauseTimer()">
+      pause_arrow
+    </mat-icon>
+  </button>
+  <span>{{currentTask.numPomodoroDone}}</span>
+  <app-circle-progress [progress]="valueProgress"></app-circle-progress>
 </div>
 
 
