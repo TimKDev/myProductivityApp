@@ -2,6 +2,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { FirebaseAuthService } from '../Services/firebase-auth.service';
 import { PomodoroTimerService } from '../Services/pomodoro-timer.service';
 import { TaskDetailsComponent } from './kanban/task-details/task-details.component';
@@ -24,7 +25,8 @@ export class AppComponent {
     public dialog: MatDialog,
     public timer: PomodoroTimerService,
     private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher
+    private media: MediaMatcher,
+    private router: Router
   ){
     this.mobileQuery = this.media.matchMedia('(max-width: 1000px)');
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
@@ -48,6 +50,10 @@ export class AppComponent {
   }
 
   openDialogTaskDetails() {
+    if (this.timer.currentTaskId == 'dummy'){
+      this.router.navigate([this.fireAuth.userUid, 'pomodoro']);
+      return;
+    }
     const dialogRef = this.dialog.open(TaskDetailsComponent, {
       maxWidth: this.isMobileView() ? '100vw' : 'auto',
       maxHeight: this.isMobileView() ? '100vh' : 'auto',

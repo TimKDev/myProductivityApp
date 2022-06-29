@@ -13,8 +13,16 @@
       pause_arrow
     </mat-icon>
   </button>
-  <span>{{currentTask.numPomodoroDone}}</span>
   <app-circle-progress [progress]="valueProgress"></app-circle-progress>
+  <button mat-icon-button (click)="addFiveMinutes()">
+    <span> +5min</span>
+  </button>
+  <button mat-icon-button (click)="resetTimer()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <button mat-icon-button (click)="timer.finishTimer()">
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
 </div>
 
 

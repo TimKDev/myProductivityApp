@@ -16,6 +16,9 @@ export class PomodoroComponent implements OnInit, DoCheck {
   taskId = 'dummy';
 
   valueProgress: number = 0;
+  secondsTotal!: number;
+  setSecondsTotalPomodoro = false;
+  setSecondsTotalPause = false;
 
   constructor(public timer: PomodoroTimerService) { }
 
@@ -23,16 +26,29 @@ export class PomodoroComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    // console.log(this.timer.activeTimer.secondsLeft);
     this.valueProgress = this.getValueProgressFromClock();
   }
 
+  setValueSecondsTotal() {
+    if (this.timer.isPomodoro && !this.setSecondsTotalPomodoro){
+      this.secondsTotal = this.timer.pomodoroLenght;
+      this.setSecondsTotalPomodoro = true;
+      this.setSecondsTotalPause = false;
+    } 
+    if (!this.timer.isPomodoro && !this.setSecondsTotalPause){
+      this.secondsTotal = this.timer.pomodoroPause;
+      this.setSecondsTotalPomodoro = false;
+      this.setSecondsTotalPause = true;
+    } 
+  }
+
   getValueProgressFromClock(): number {
-    let secondsTotal!: number;
-    if (!this.timer.isPomodoro) secondsTotal = this.timer.pomodoroPause;
-    else secondsTotal = this.timer.pomodoroLenght;
-    let secondsPassed: number = secondsTotal - this.timer.activeTimer.secondsLeft;
-    let progressValueStep: number = 100/secondsTotal;
+    if(!this.timer.activeTimer) return 0;
+    this.setValueSecondsTotal();
+    console.log(this.timer.numFiveMinutesAdded);
+    
+    let secondsPassed: number = 300*this.timer.numFiveMinutesAdded + this.secondsTotal - this.timer.activeTimer.secondsLeft;
+    let progressValueStep: number = 100/(300*this.timer.numFiveMinutesAdded + this.secondsTotal);
     return secondsPassed * progressValueStep;
   }
 
@@ -42,6 +58,22 @@ export class PomodoroComponent implements OnInit, DoCheck {
       this.timer.currentTaskId = 'unset';
     }
     this.timer.playTimer();
+  }
+
+  addFiveMinutes() {
+    // this.secondsTotal += 300;
+    this.timer.numFiveMinutesAdded++;
+    this.timer.addFiveMinutesToTimer();
+  }
+
+  resetTimer() {
+    if (this.timer.isPomodoro){
+      this.secondsTotal = this.timer.pomodoroLenght;
+    } 
+    if (!this.timer.isPomodoro){
+      this.secondsTotal = this.timer.pomodoroPause;
+    } 
+    this.timer.restartTimer()
   }
 
   

@@ -20,8 +20,6 @@ export class CircleProgressComponent implements AfterViewInit {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if(!this.progressView) return;
-    console.log('changes');
-    
     this.loadData();
   }
 }
