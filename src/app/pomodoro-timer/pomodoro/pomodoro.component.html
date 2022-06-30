@@ -1,28 +1,47 @@
 <div class="main-div">
-  
-
-  
-  <span>{{timer.activeTimer ? (timer.activeTimer.clock[0] | clock) : clockInit[0] | clock}} : {{timer.activeTimer ? (timer.activeTimer.clock[1] | clock) : clockInit[1]}}</span>
-  <button mat-icon-button>
-    <mat-icon *ngIf="timer.isTimerPaused"
-    (click)="startTimer()">
-      play_arrow
-    </mat-icon>
-    <mat-icon *ngIf="!timer.isTimerPaused" 
-    (click)="timer.pauseTimer()">
-      pause_arrow
-    </mat-icon>
-  </button>
   <app-circle-progress [progress]="valueProgress"></app-circle-progress>
-  <button mat-icon-button (click)="addFiveMinutes()">
-    <span> +5min</span>
-  </button>
-  <button mat-icon-button (click)="resetTimer()">
-    <mat-icon>refresh</mat-icon>
-  </button>
-  <button mat-icon-button (click)="timer.finishTimer()">
-    <mat-icon>arrow_forward</mat-icon>
-  </button>
+  <div class="innerClock">
+    <div class="timer">
+      {{timer.activeTimer ? (timer.activeTimer.clock[0] | clock) : clockInit[0] | clock}} : {{timer.activeTimer ? (timer.activeTimer.clock[1] | clock) : clockInit[1]}}
+    </div>
+    <div class="play">
+      <button mat-icon-button
+      style="
+      height:64px !important;
+      width:64px !important;
+      font-size:64px !important;" >
+        <mat-icon *ngIf="timer.isTimerPaused"
+        style="
+        height:64px !important;
+        width:64px !important;
+        font-size:64px !important;
+        line-height: 54px !important;" 
+        (click)="startTimer()">
+          play_arrow
+        </mat-icon>
+        <mat-icon *ngIf="!timer.isTimerPaused" 
+        style="
+        height:64px !important;
+        width:64px !important;
+        font-size:64px !important;
+        line-height: 54px !important;" 
+        (click)="timer.pauseTimer()">
+          pause_arrow
+        </mat-icon>
+      </button>
+    </div>
+    <div class="other-btn">
+      <button mat-icon-button (click)="addFiveMinutes()">
+        <span> +5min</span>
+      </button>
+      <button mat-icon-button (click)="resetTimer()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button mat-icon-button (click)="timer.finishTimer()">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>
 
 

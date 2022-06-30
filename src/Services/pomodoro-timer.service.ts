@@ -123,6 +123,7 @@ export class PomodoroTimerService {
     if(!this.activeTimer || !this.isTimerInit) return;
     if(this.isTaskFinished()) return;
     this.cancleActiveTimer();
+    this.numFiveMinutesAdded = 0;
     this.isTimerPaused = true;
     this.currentTaskId = 'unset';
     this.isTimerInit = false;
